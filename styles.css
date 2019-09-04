@@ -48,6 +48,7 @@ aside {
   display: flex;
   flex-direction: column;
   align-items: center;
+  border: 2px solid #3C6577;
 }
 
 .aside-task-form {
@@ -58,10 +59,11 @@ aside {
 }
 
 .aside-task-form-labels {
-  color: #F3F6f7;
+  color: #C7D3D8;
   padding: 1%;
   margin-bottom: 4px;
   font-size: 126%;
+  font-weight: 700;
 }
 
 .aside-task-title-input {
@@ -69,6 +71,21 @@ aside {
   padding: 2.4%;
   border: 2px solid #1F1F3D;
   border-radius: 3px;
+}
+
+.aside-added-task {
+  display: flex;
+  color: #C7D3D8;
+  width: 100%;
+  border: 1px solid red;
+  font-size: 169%;
+  font-weight: 400;
+  margin: 27px auto;
+  justify-content: center;
+}
+
+.aside-added-task-icon-x {
+  margin: 0px 10px;
 }
 
 .aside-task-item-and-button-container {
@@ -92,9 +109,10 @@ aside {
   color: #FFFFFF;
   padding: 0;
   margin: 0;
-  font-size: 2em;
-  font-weight: 400;
+  font-size: 5em;
+  font-weight: 300;
   border: none;
+  line-height: 0;
 }
 
 .aside-blue-button {
@@ -104,16 +122,16 @@ aside {
   padding: 2.4% 0;
   border: 2px solid #1F1F3D;
   border-radius: 3px;
-  margin: 10px 0px;
+  margin: 12px 0px;
   width: 100%;
 }
 
 .aside-bottom-section {
-  width: 92%;
+  width: 100%;
   padding-top: 5%;
-  border-top: 2px solid blue;
+  border-top: 2px solid #3C6577;
   margin-top: 29px;
-  padding-top: 7%;
+  padding: 7% 4% 7% 4%;
 }
 /* need to format plus button more */
 
