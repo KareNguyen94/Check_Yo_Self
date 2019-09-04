@@ -25,6 +25,20 @@ header {
   color: #FFFFFF;
 }
 
+.header-search-button {
+  width: 45px;
+  height: 45px;
+  fill: #F3F6f7;
+  float: left;
+}
+
+.header-search-input {
+  font-size: 125%;
+  padding: 2%;
+  width: 87%;
+}
+
+
 h1 {
   margin: 20px 10px;
 }
