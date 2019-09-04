@@ -25,6 +25,24 @@ header {
   color: #FFFFFF;
 }
 
+.header-search-button {
+  width: 45px;
+  height: 45px;
+  border-radius: 3px 0px 0px 3px;
+  background-color: #C7D3D8;
+}
+
+.header-search-input {
+  font-size: 125%;
+  padding: 2%;
+  width: 89%;
+  border-radius: 0px 3px 3px 0px;
+}
+
+.header-search-icon {
+ fill: #C7D3D8;
+}
+
 h1 {
   margin: 20px 10px;
 }
@@ -36,10 +54,7 @@ span {
 .header-searchbox {
   width: 30%;
   margin: 5px;
-}
-
-.header-search-button {
-  background-color: #F3F6F7;
+  display: flex;
 }
 
 aside {
