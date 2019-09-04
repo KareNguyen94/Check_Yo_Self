@@ -18,34 +18,22 @@
     <aside>
       <form class="aside-task-form">
         <label class="aside-task-form-labels" for="task-title">Task Title</label>
-        <input class="aside-task-title-input" type="text" name="task-title">
+        <input class="aside-task-title-input" id="aside-task-title-input-js" type="text" name="task-title">
         <section id="aside-section-task-items-js">
-          <!-- <div class="aside-added-task-box">
-          <img src="assets/delete.svg" alt="delete X icon" class="aside-added-task-icon-x" />
-          <p>Don't ever play yourself.</p>
-          </div>
-          <div class="aside-added-task-box">
-          <img src="assets/delete.svg" alt="delete X icon" class="aside-added-task-icon-x" />
-          <p>Lorem Khaled ipsum is  a major key to success.</p>
-          </div>
-          <div class="aside-added-task-box">
-          <img src="assets/delete.svg" alt="delete X icon" class="aside-added-task-icon-x" />
-          <p>Don't ever play yourself.</p>
-          </div> -->
         </section>
         <label class="aside-task-form-labels" for="task-item">Task Item</label>
         <div class="aside-task-item-and-button-container">
           <input class="aside-task-item-input" id="aside-task-item-input-js" type="text" name="task-item">
           <button class="aside-plus-button disabled-button" id="aside-plus-button-js" disabled>+</button>
         </div>
-        <button class="aside-blue-button">Make Task List</button>
+        <button class="aside-blue-button" id="make-task-button">Make Task List</button>
         <button class="aside-blue-button">Clear All</button>
       </form>
       <section class="aside-bottom-section">
         <button class="aside-blue-button">Filter by Urgency</button>
       </section>
     </aside>
-      <main>
+      <main id="main-taskcard-parent">
         <div class="main-taskcard-parent-div">
           <form class="main-taskcard">
             <h2 class="form-taskcard-header">Task Title</h2>
@@ -56,7 +44,7 @@
               </div>
               <div class="form-taskcard-div">
                 <img class="form-taskcard-checkimg" src="assets/checkbox.svg" alt="empty checkbox circle" />
-                <p>Don't Ever PLay yourself<p>
+                <p>array[]<p>
               </div>
               <div class="form-taskcard-div">
                 <img class="form-taskcard-checkimg" src="assets/checkbox.svg" alt="empty checkbox circle" />
@@ -87,7 +75,7 @@
             </footer>
           </form>
         </div>
-        <div class="main-taskcard-parent-div">
+        <!-- <div class="main-taskcard-parent-div">
           <form class="main-taskcard">
             <h2 class="form-taskcard-header">Task Title</h2>
             <section class="main-taskcard-section">
@@ -177,7 +165,7 @@
               </div>
             </footer>
           </form>
-        </div>
+        </div> -->
       </main>
       <script src="todo-list.js"></script>
       <script src="task.js"></script>
