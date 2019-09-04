@@ -3,7 +3,7 @@
   padding: 0;
   box-sizing: border-box;
   font-family: 'Open Sans', sans-serif;
-  border: 1px solid blue;
+  /* border: 1px solid blue; */
 }
 
 body {
@@ -53,17 +53,69 @@ aside {
 .aside-task-form {
   display: flex;
   flex-direction: column;
-  width: 95%;
+  width: 92%;
+  margin-top: 37px;
 }
 
 .aside-task-form-labels {
   color: #F3F6f7;
+  padding: 1%;
+  margin-bottom: 4px;
+  font-size: 126%;
 }
 
 .aside-task-title-input {
-  font-size: 125%;
-  padding: 2%;
+  font-size: 172%;
+  padding: 2.4%;
+  border: 2px solid #1F1F3D;
+  border-radius: 3px;
 }
+
+.aside-task-item-and-button-container {
+  border: 2px solid #1F1F3D;
+  border-radius: 3px;
+  display: flex;
+  margin-bottom: 25px;
+}
+
+.aside-task-item-input {
+  font-size: 172%;
+  padding: 2.7%;
+  width: 87%;
+  border: none;
+}
+
+.aside-plus-button {
+  width: 60px;
+  height: 60px;
+  background-color: #1F1F3D;
+  color: #FFFFFF;
+  padding: 0;
+  margin: 0;
+  font-size: 2em;
+  font-weight: 400;
+  border: none;
+}
+
+.aside-blue-button {
+  background-color: #1F1F3D;
+  color: #FFFFFF;
+  font-size: 172%;
+  padding: 2.4% 0;
+  border: 2px solid #1F1F3D;
+  border-radius: 3px;
+  margin: 10px 0px;
+  width: 100%;
+}
+
+.aside-bottom-section {
+  width: 92%;
+  padding-top: 5%;
+  border-top: 2px solid blue;
+  margin-top: 29px;
+  padding-top: 7%;
+}
+/* need to format plus button more */
 
 main {
   grid-area: main;
