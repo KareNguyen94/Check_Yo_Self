@@ -4,6 +4,7 @@ var taskItemParent = document.getElementById("aside-section-task-items-js");
 
 addTaskButton.addEventListener("click", addTaskItem);
 taskItemParent.addEventListener("click", removeTaskItem);
+taskItemInput.addEventListener("keyup", toggleButton);
 
 function addTaskItem(event) {
   event.preventDefault();
@@ -16,4 +17,14 @@ function addTaskItem(event) {
 function removeTaskItem(event) {
   if (event.target.classList.contains("aside-added-task-icon-x"))
     event.target.parentNode.remove();
+}
+
+function toggleButton() {
+  if (taskItemInput.value !== "") {
+    addTaskButton.classList.remove("disabled-button");
+    addTaskButton.disabled = false;
+  } else {
+    addTaskButton.classList.add("disabled-button");
+    addTaskButton.disabled = true;
+  }
 }
