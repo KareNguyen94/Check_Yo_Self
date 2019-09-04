@@ -3,6 +3,7 @@
   padding: 0;
   box-sizing: border-box;
   font-family: 'Open Sans', sans-serif;
+  /* border: 1px solid blue; */
 }
 
 .main-div-container {
@@ -17,6 +18,24 @@ header {
   color: #FFFFFF;
 }
 
+.header-search-button {
+  width: 45px;
+  height: 45px;
+  border-radius: 3px 0px 0px 3px;
+  background-color: #C7D3D8;
+}
+
+.header-search-input {
+  font-size: 125%;
+  padding: 2%;
+  width: 89%;
+  border-radius: 0px 3px 3px 0px;
+}
+
+.header-search-icon {
+ fill: #C7D3D8;
+}
+
 h1 {
   margin: 20px 10px;
 }
@@ -28,10 +47,7 @@ span {
 .header-searchbox {
   width: 30%;
   margin: 5px;
-}
-
-.header-search-button {
-  background-color: #F3F6F7;
+  display: flex;
 }
 
 aside {
@@ -41,22 +57,92 @@ aside {
   align-items: center;
   width: 25%;
   height: 100vh;
+  border: 2px solid #3C6577;
 }
 
 .aside-task-form {
   display: flex;
   flex-direction: column;
-  width: 95%;
+  width: 92%;
+  margin-top: 37px;
 }
 
 .aside-task-form-labels {
-  color: #F3F6f7;
+  color: #C7D3D8;
+  padding: 1%;
+  margin-bottom: 4px;
+  font-size: 126%;
+  font-weight: 700;
 }
 
 .aside-task-title-input {
-  font-size: 125%;
-  padding: 2%;
+  font-size: 172%;
+  padding: 2.4%;
+  border: 2px solid #1F1F3D;
+  border-radius: 3px;
 }
+
+.aside-added-task {
+  display: flex;
+  color: #C7D3D8;
+  width: 100%;
+  border: 1px solid red;
+  font-size: 169%;
+  font-weight: 400;
+  margin: 27px auto;
+  justify-content: center;
+}
+
+.aside-added-task-icon-x {
+  margin: 0px 10px;
+}
+
+.aside-task-item-and-button-container {
+  border: 2px solid #1F1F3D;
+  border-radius: 3px;
+  display: flex;
+  margin-bottom: 25px;
+}
+
+.aside-task-item-input {
+  font-size: 172%;
+  padding: 2.7%;
+  width: 87%;
+  border: none;
+}
+
+.aside-plus-button {
+  width: 60px;
+  height: 60px;
+  background-color: #1F1F3D;
+  color: #FFFFFF;
+  padding: 0;
+  margin: 0;
+  font-size: 5em;
+  font-weight: 300;
+  border: none;
+  line-height: 0;
+}
+
+.aside-blue-button {
+  background-color: #1F1F3D;
+  color: #FFFFFF;
+  font-size: 172%;
+  padding: 2.4% 0;
+  border: 2px solid #1F1F3D;
+  border-radius: 3px;
+  margin: 12px 0px;
+  width: 100%;
+}
+
+.aside-bottom-section {
+  width: 100%;
+  padding-top: 5%;
+  border-top: 2px solid #3C6577;
+  margin-top: 29px;
+  padding: 7% 4% 7% 4%;
+}
+/* need to format plus button more */
 
 main {
   display: flex;
