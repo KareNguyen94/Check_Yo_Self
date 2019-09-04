@@ -3,21 +3,13 @@
   padding: 0;
   box-sizing: border-box;
   font-family: 'Open Sans', sans-serif;
-  border: 1px solid blue;
 }
 
-body {
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  grid-template-rows: 10% 90%;
-  grid-template-areas:
-  "header header"
-  "aside main";
-
+.main-div-container {
+  display: flex;
 }
 
 header {
-  grid-area: header;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -43,11 +35,12 @@ span {
 }
 
 aside {
-  grid-area: aside;
   background-color: #587A8A;
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 25%;
+  height: 100vh;
 }
 
 .aside-task-form {
@@ -66,11 +59,76 @@ aside {
 }
 
 main {
-  grid-area: main;
+  display: flex;
+  flex-wrap: wrap;
+  background-color: #F3F6F7;
+  width: 75%;
+  height: 100vh;
+  overflow: auto;
 }
 
+.main-taskcard-parent-div {
+  width: 47%;
+  margin: 10px;
+  box-sizing: border-box;
+}
+
+.main-taskcard {
+  width: 100%;
+  border: 2px solid #C7D3D8;
+  background-color: #FAFDFF;
+}
+
+.form-taskcard-header {
+  margin: 0px 5px 10px 5px;
+  padding: 10px;
+  border-bottom: 2px solid #C7D3D8;
+  color: #1F1F3D;
+}
+
+.main-taskcard-section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  height: auto;
+}
+
+.form-taskcard-div {
+  display: flex;
+  align-items: center;
+  margin: 15px;
+}
+
+.form-taskcard-firsttodo {
+  color: #1F1F3D;
+}
+
+.form-taskcard-checkimg {
+  margin-right: 10px;
+  height: 25px;
+  width: 25px;
+}
+
+.form-taskcard-todo {
+  font-size: 75%;
+  color: #3C6577;
+}
+
+footer {
+  border-top: 2px solid #C7D3D8;
+  display: flex;
+  justify-content: space-between;
+}
+
+.form-footer-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 10px;
+}
 
 img {
+  margin: 0 auto 5px auto;
   height: 20px;
   width: 20px;
 }

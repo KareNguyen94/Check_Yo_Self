@@ -6,100 +6,173 @@
     <title>Check Yo Self</title>
   </head>
   <body>
-    <header>
-      <h1>CHECK<span> YO' </span>SELF</h1>
-      <div class="header-searchbox">
-        <button class="header-search-button"><img src="assets/search.svg" alt="Search icon for button"></button>
-        <input type="text" placeholder="Search">
-      </div>
-    </header>
-    <aside>
-      <form class="aside-task-form">
-        <label class="aside-task-form-labels" for="task-title">Task Title</label>
-        <input class="aside-task-title-input" type="text" name="task-title">
-        <section>
-          <div>
-          <img src="assets/delete.svg" alt="delete X icon" />
-          <p>TASK TASK TASK</p>
-          </div>
-        </section>
-        <label class="aside-task-form-labels" for="task-item">Task Item</label>
-        <div>
-          <input class="aside-task-item-input" type="text" name="task-item">
-          <button>+</button>
+      <header>
+        <h1>CHECK<span> YO' </span>SELF</h1>
+        <div class="header-searchbox">
+          <button class="header-search-button"><img src="assets/search.svg" alt="Search icon for button"></button>
+          <input type="text" placeholder="Search">
         </div>
-        <button>Make Task List</button>
-        <button>Clear All</button>
-      </form>
-      <section>
-        <button>Filter by Urgency</button>
-      </section>
-    </aside>
-    <main>
-      <section>
-        <form>
-          <h2>Task Title</h2>
+      </header>
+    <div class="main-div-container">
+      <aside>
+        <form class="aside-task-form">
+          <label class="aside-task-form-labels" for="task-title">Task Title</label>
+          <input class="aside-task-title-input" type="text" name="task-title">
           <section>
             <div>
-              <img src="assets/checkbox.svg" alt="empty checkbox circle" />
-              <p>Task<p>
-            </div>
-            <div>
-              <img src="assets/checkbox.svg" alt="empty checkbox circle" />
-              <p>Task<p>
-            </div>
-            <div>
-              <img src="assets/checkbox.svg" alt="empty checkbox circle" />
-              <p>Task<p>
+            <img src="assets/delete.svg" alt="delete X icon" />
+            <p>TASK TASK TASK</p>
             </div>
           </section>
-          <footer>
-            <div>
-              <img src="assets/urgent.svg" alt="lightning bolt icon" />
-              <p>URGENT<p>
-            </div>
-            <div>
-              <img src="assets/delete.svg" alt="delete X icon" />
-              <p>DELETE<p>
-            </div>
-          </footer>
+          <label class="aside-task-form-labels" for="task-item">Task Item</label>
+          <div>
+            <input class="aside-task-item-input" type="text" name="task-item">
+            <button>+</button>
+          </div>
+          <button>Make Task List</button>
+          <button>Clear All</button>
         </form>
-      </section>
-      <section>
-        <form>
-          <h2>Task Title</h2>
-          <section>
-            <div>
-              <img src="assets/checkbox.svg" alt="empty checkbox circle" />
-              <p>Task<p>
-            </div>
-            <div>
-              <img src="assets/checkbox.svg" alt="empty checkbox circle" />
-              <p>Task<p>
-            </div>
-            <div>
-              <img src="assets/checkbox.svg" alt="empty checkbox circle" />
-              <p>Task<p>
-            </div>
-          </section>
-          <footer>
-            <div>
-              <img src="assets/urgent.svg" alt="lightning bolt icon" />
-              <p>URGENT<p>
-            </div>
-            <div>
-              <img src="assets/delete.svg" alt="delete X icon" />
-              <p>DELETE<p>
-            </div>
-          </footer>
-        </form>
-      </section>
-    </main>
-
-
-
-    <script src="todo-list.js"></script>
-    <script src="task.js"></script>
-    <script src="main.js"></script>
+        <section>
+          <button>Filter by Urgency</button>
+        </section>
+      </aside>
+      <main>
+        <div class="main-taskcard-parent-div">
+          <form class="main-taskcard">
+            <h2 class="form-taskcard-header">Task Title</h2>
+            <section class="main-taskcard-section">
+              <div class="form-taskcard-div">
+                <img class="form-taskcard-checkimg" src="assets/checkbox.svg" alt="empty checkbox circle" />
+                <p class="form-taskcard-firsttodo">Don't Ever PLay yourself<p>
+              </div>
+              <div class="form-taskcard-div">
+                <img class="form-taskcard-checkimg" src="assets/checkbox.svg" alt="empty checkbox circle" />
+                <p>Don't Ever PLay yourself<p>
+              </div>
+              <div class="form-taskcard-div">
+                <img class="form-taskcard-checkimg" src="assets/checkbox.svg" alt="empty checkbox circle" />
+                <p>Don't Ever PLay yourself<p>
+              </div>
+              <div class="form-taskcard-div">
+                <img class="form-taskcard-checkimg" src="assets/checkbox.svg" alt="empty checkbox circle" />
+                <p>Don't Ever PLay yourself<p>
+              </div>
+              <div class="form-taskcard-div">
+                <img class="form-taskcard-checkimg" src="assets/checkbox.svg" alt="empty checkbox circle" />
+                <p>Finish up that CSS!!<p>
+              </div>
+              <div class="form-taskcard-div">
+                <img class="form-taskcard-checkimg" src="assets/checkbox.svg" alt="empty checkbox circle" />
+                <p>Take notes, take notes and take notes<p>
+              </div>
+            </section>
+            <footer>
+              <div class="form-footer-div">
+                <img class="form-taskcard-checkimg" src="assets/urgent.svg" alt="lightning bolt icon" />
+                <p class="form-taskcard-todo">URGENT<p>
+              </div>
+              <div class="form-footer-div">
+                <img class="form-taskcard-checkimg" src="assets/delete.svg" alt="delete X icon" />
+                <p class="form-taskcard-todo">DELETE<p>
+              </div>
+            </footer>
+          </form>
+        </div>
+        <div class="main-taskcard-parent-div">
+          <form class="main-taskcard">
+            <h2 class="form-taskcard-header">Task Title</h2>
+            <section class="main-taskcard-section">
+              <div class="form-taskcard-div">
+                <img class="form-taskcard-checkimg" src="assets/checkbox.svg" alt="empty checkbox circle" />
+                <p class="form-taskcard-firsttodo">Don't Ever PLay yourself<p>
+              </div>
+              <div class="form-taskcard-div">
+                <img class="form-taskcard-checkimg" src="assets/checkbox.svg" alt="empty checkbox circle" />
+                <p>Don't Ever PLay yourself<p>
+              </div>
+              <div class="form-taskcard-div">
+                <img class="form-taskcard-checkimg" src="assets/checkbox.svg" alt="empty checkbox circle" />
+                <p>Don't Ever PLay yourself<p>
+              </div>
+              <div class="form-taskcard-div">
+                <img class="form-taskcard-checkimg" src="assets/checkbox.svg" alt="empty checkbox circle" />
+                <p>Don't Ever PLay yourself<p>
+              </div>
+            </section>
+            <footer>
+              <div class="form-footer-div">
+                <img class="form-taskcard-checkimg" src="assets/urgent.svg" alt="lightning bolt icon" />
+                <p class="form-taskcard-todo">URGENT<p>
+              </div>
+              <div class="form-footer-div">
+                <img class="form-taskcard-checkimg" src="assets/delete.svg" alt="delete X icon" />
+                <p class="form-taskcard-todo">DELETE<p>
+              </div>
+            </footer>
+          </form>
+        </div>
+        <div class="main-taskcard-parent-div">
+          <form class="main-taskcard">
+            <h2 class="form-taskcard-header">Task Title</h2>
+            <section class="main-taskcard-section">
+              <div class="form-taskcard-div">
+                <img class="form-taskcard-checkimg" src="assets/checkbox.svg" alt="empty checkbox circle" />
+                <p class="form-taskcard-firsttodo">Don't Ever PLay yourself<p>
+              </div>
+              <div class="form-taskcard-div">
+                <img class="form-taskcard-checkimg" src="assets/checkbox.svg" alt="empty checkbox circle" />
+                <p>Finish up that CSS!!<p>
+              </div>
+              <div class="form-taskcard-div">
+                <img class="form-taskcard-checkimg" src="assets/checkbox.svg" alt="empty checkbox circle" />
+                <p>Take notes, take notes and take notes<p>
+              </div>
+            </section>
+            <footer>
+              <div class="form-footer-div">
+                <img class="form-taskcard-checkimg" src="assets/urgent.svg" alt="lightning bolt icon" />
+                <p class="form-taskcard-todo">URGENT<p>
+              </div>
+              <div class="form-footer-div">
+                <img class="form-taskcard-checkimg" src="assets/delete.svg" alt="delete X icon" />
+                <p class="form-taskcard-todo">DELETE<p>
+              </div>
+            </footer>
+          </form>
+        </div>
+        <div class="main-taskcard-parent-div">
+          <form class="main-taskcard">
+            <h2 class="form-taskcard-header">Task Title</h2>
+            <section class="main-taskcard-section">
+              <div class="form-taskcard-div">
+                <img class="form-taskcard-checkimg" src="assets/checkbox.svg" alt="empty checkbox circle" />
+                <p>Don't Ever PLay yourself<p>
+              </div>
+              <div class="form-taskcard-div">
+                <img class="form-taskcard-checkimg" src="assets/checkbox.svg" alt="empty checkbox circle" />
+                <p>Finish up that CSS!!<p>
+              </div>
+              <div class="form-taskcard-div">
+                <img class="form-taskcard-checkimg" src="assets/checkbox.svg" alt="empty checkbox circle" />
+                <p>Take notes, take notes and take notes<p>
+              </div>
+            </section>
+            <footer>
+              <div class="form-footer-div">
+                <img class="form-taskcard-checkimg" src="assets/urgent.svg" alt="lightning bolt icon" />
+                <p class="form-taskcard-todo">URGENT<p>
+              </div>
+              <div class="form-footer-div">
+                <img class="form-taskcard-checkimg" src="assets/delete.svg" alt="delete X icon" />
+                <p class="form-taskcard-todo">DELETE<p>
+              </div>
+            </footer>
+          </form>
+        </div>
+      </main>
+      <script src="todo-list.js"></script>
+      <script src="task.js"></script>
+      <script src="main.js"></script>
+    </div>
   </body>
 </html>
