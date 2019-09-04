@@ -130,6 +130,13 @@ aside {
   font-weight: 300;
   border: none;
   line-height: 0;
+  cursor: pointer;
+  outline: none;
+}
+
+.disabled-button {
+  background-color: lightblue;
+  cursor: not-allowed;
 }
 
 .aside-blue-button {
