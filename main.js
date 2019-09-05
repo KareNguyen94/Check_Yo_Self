@@ -13,9 +13,7 @@ var taskCardParent2 = document.getElementById('taskcard-parent2');
 
 
 addTaskButton.addEventListener("click", addTaskItem);
-addTaskButton.addEventListener("click", disableButtons);
 taskItemParent.addEventListener("click", removeTaskItem);
-taskItemParent.addEventListener("click", disableButtons);
 taskItemInput.addEventListener("keyup", togglePlusButton);
 makeTaskListButton.addEventListener("click", addTaskList);
 clearAllButton.addEventListener("click,", clearField);
@@ -59,7 +57,6 @@ function addTaskList(event) {
   } else {
     taskCardParent2.insertAdjacentHTML('afterbegin', htmlToEnter);
   }
-
   taskItemsArr.splice(0, i);
   clearField(event);
   disableButtons();
@@ -77,6 +74,8 @@ function addTaskItem(event) {
   </div>`);
   console.log(taskItemsArr);
   taskItemInput.value = "";
+  togglePlusButton();
+  disableButtons();
   // write new function DRY
 }
 
@@ -84,6 +83,7 @@ function removeTaskItem(event) {
   if (event.target.classList.contains("aside-added-task-icon-x"))
     event.target.parentNode.remove();
     taskItemsArr.shift();
+    disableButtons();
 }
 
 function togglePlusButton() {
@@ -101,8 +101,7 @@ function disableButtons() {
   toggleButtons(clearAllButton);
 }
 function toggleButtons(button) {
-  // event.preventDefault();
-  if (taskTitleInput.value.length > 1 && taskItemsArr.length > 0) {
+  if (taskTitleInput.value.length > 0 && taskItemsArr.length > 0) {
     button.classList.remove("disabled-button");
     button.disabled = false;
   } else {
