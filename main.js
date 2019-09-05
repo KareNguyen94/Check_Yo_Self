@@ -10,6 +10,7 @@ var formField = document.getElementById("aside-task-form-js");
 var cardCount = 0;
 var taskCardParent1 = document.getElementById("taskcard-parent1");
 var taskCardParent2 = document.getElementById("taskcard-parent2");
+var taskJustTextArr = [];
 
 
 addTaskButton.addEventListener("click", clickAddTaskButton);
@@ -26,7 +27,8 @@ function clickAddTaskButton() {
 }
 
 function clickMakeTaskButton() {
-  addTaskList(event)
+  grabTaskDivs();
+  addTaskList(event);
   clearField(event);
   disableButtons();
   removeAllTaskItems();
@@ -53,6 +55,14 @@ function clearField(event) {
 function emptyTaskItemsArr() {
   for (var i = 0; i < taskItemsArr.length; i++) {
     taskItemsArr.splice(0, taskItemsArr.length);
+  }
+}
+
+function grabTaskDivs() {
+  var taskDivArr = document.querySelectorAll(".select-me");
+  // var taskTextPar = documemt.getElementById("task-text");
+  for (var i = 0; i < taskDivArr.length; i++) {
+    taskJustTextArr.push(taskDivArr[i].innerText)
   }
 }
 
@@ -94,14 +104,15 @@ function addTaskList(event) {
 
 function addTaskItem(event) {
   event.preventDefault();
-  taskItemParent.innerHTML +=  `<div class="aside-added-task-box">
-      <img src="assets/delete.svg" alt="delete X icon" class="aside-added-task-icon-x" />
-      <p>${taskItemInput.value}</p>
+  taskItemParent.innerHTML +=  `
+      <div class="select-me aside-added-task-box">
+        <img src="assets/delete.svg" alt="delete X icon" class="aside-added-task-icon-x" />
+        <p id="task-text">${taskItemInput.value}</p>
       </div>`;
-  taskItemsArr.push(`<div class="form-taskcard-div">
-    <img class="form-taskcard-checkimg" src="assets/checkbox.svg" alt="empty checkbox circle" />
-    <p class="form-taskcard-firsttodo">${taskItemInput.value}<p>
-  </div>`);
+  // taskItemsArr.push(`<div class="form-taskcard-div">
+  //   <img class="form-taskcard-checkimg" src="assets/checkbox.svg" alt="empty checkbox circle" />
+  //   <p class="form-taskcard-firsttodo">${taskItemInput.value}<p>
+  // </div>`);
   taskItemInput.value = "";
   // write new function DRY
 }
@@ -130,7 +141,7 @@ function disableButtons() {
 }
 
 function toggleButtons(button) {
-  if (taskTitleInput.value.length > 0 && taskItemsArr.length > 0) {
+  if (taskTitleInput.value.length > 0) {
     button.classList.remove("disabled-button");
     button.disabled = false;
   } else {
@@ -138,3 +149,4 @@ function toggleButtons(button) {
     button.disabled = true;
   }
 }
+// && taskItemsArr.length > 0
