@@ -5,13 +5,22 @@ var taskTitleInput = document.getElementById("aside-task-title-input-js");
 var makeTaskListButton = document.getElementById("make-task-button");
 var taskCardParent = document.getElementById("main-taskcard-parent");
 var taskItemsArr = [];
-
+var clearAllButton = document.getElementById("clear-all-button-js");
+var formField = document.getElementById("aside-task-form-js");
 
 addTaskButton.addEventListener("click", addTaskItem);
 taskItemParent.addEventListener("click", removeTaskItem);
 taskItemInput.addEventListener("keyup", toggleButton);
 makeTaskListButton.addEventListener("click", addTaskList);
+clearAllButton.addEventListener("click", clearField);
 
+
+function clearField(event) {
+  event.preventDefault();
+  formField.reset();
+  toggleButton();
+
+}
 
 function addTaskList(event) {
   event.preventDefault();
@@ -37,6 +46,8 @@ function addTaskList(event) {
       </footer>
     </form>
   </div>`)
+
+  clearField(event);
 }
 
 function addTaskItem(event) {
@@ -50,6 +61,9 @@ function addTaskItem(event) {
     <p class="form-taskcard-firsttodo">${taskItemInput.value}<p>
   </div>`);
   console.log(taskItemsArr);
+  taskItemInput.value = "";
+  toggleButton();
+  // write new function DRY
 }
 
 function removeTaskItem(event) {
