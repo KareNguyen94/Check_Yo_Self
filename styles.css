@@ -134,11 +134,6 @@ aside {
   outline: none;
 }
 
-.disabled-button {
-  background-color: lightblue;
-  cursor: not-allowed;
-}
-
 .aside-blue-button {
   background-color: #1F1F3D;
   color: #FFFFFF;
@@ -148,6 +143,11 @@ aside {
   border-radius: 3px;
   margin: 12px 0px;
   width: 100%;
+}
+
+.disabled-button {
+  background-color: lightblue;
+  cursor: not-allowed;
 }
 
 .aside-bottom-section {
@@ -161,15 +161,21 @@ aside {
 
 main {
   display: flex;
-  flex-wrap: wrap;
   background-color: #F3F6F7;
   width: 75%;
   height: 1250px;
   overflow: auto;
 }
 
+.main-taskcard-parent-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 50%;
+}
+
 .main-taskcard-parent-div {
-  width: 47%;
+  width: 90%;
   margin: 10px;
   box-sizing: border-box;
 }
