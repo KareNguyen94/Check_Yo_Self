@@ -14,12 +14,17 @@ taskItemInput.addEventListener("keyup", toggleButton);
 makeTaskListButton.addEventListener("click", addTaskList);
 clearAllButton.addEventListener("click", clearField);
 
+function removeAllTaskItems() {
+  while (taskItemParent.firstChild) {
+    taskItemParent.removeChild(taskItemParent.firstChild);
+  }
+}
 
 function clearField(event) {
   event.preventDefault();
   formField.reset();
   toggleButton();
-
+  removeAllTaskItems();
 }
 
 function addTaskList(event) {
@@ -29,27 +34,27 @@ function addTaskList(event) {
     taskInfo += taskItemsArr[i];
   }
   taskCardParent.insertAdjacentHTML('afterbegin', `
-  <div class="main-taskcard-parent-div">
-    <form class="main-taskcard">
-      <h2 class="form-taskcard-header">${taskTitleInput.value}</h2>
-      <section class="main-taskcard-section">
-        ${taskInfo}
-      </section>
-      <footer>
-        <div class="form-footer-div">
-          <img class="form-taskcard-checkimg" src="assets/urgent.svg" alt="lightning bolt icon" />
-          <p class="form-taskcard-todo">URGENT<p>
-        </div>
-        <div class="form-footer-div">
-          <img class="form-taskcard-checkimg" src="assets/delete.svg" alt="delete X icon" />
-          <p class="form-taskcard-todo">DELETE<p>
-        </div>
-      </footer>
-    </form>
-  </div>`)
-
+    <div class="main-taskcard-parent-div">
+      <form class="main-taskcard">
+        <h2 class="form-taskcard-header">${taskTitleInput.value}</h2>
+        <section class="main-taskcard-section">
+          ${taskInfo}
+        </section>
+        <footer>
+          <div class="form-footer-div">
+            <img class="form-taskcard-checkimg" src="assets/urgent.svg" alt="lightning bolt icon" />
+            <p class="form-taskcard-todo">URGENT<p>
+          </div>
+          <div class="form-footer-div">
+            <img class="form-taskcard-checkimg" src="assets/delete.svg" alt="delete X icon" />
+            <p class="form-taskcard-todo">DELETE<p>
+          </div>
+        </footer>
+      </form>
+    </div>`)
   taskItemsArr.splice(0, i);
   clearField(event);
+  removeAllTaskItems();
 }
 
 function addTaskItem(event) {
@@ -81,4 +86,4 @@ function toggleButton() {
     addTaskButton.classList.add("disabled-button");
     addTaskButton.disabled = true;
   }
-}
+};
