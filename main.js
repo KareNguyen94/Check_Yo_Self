@@ -16,12 +16,19 @@ addTaskButton.addEventListener("click", addTaskItem);
 taskItemParent.addEventListener("click", removeTaskItem);
 taskItemInput.addEventListener("keyup", togglePlusButton);
 makeTaskListButton.addEventListener("click", addTaskList);
-clearAllButton.addEventListener("click,", clearField);
+clearAllButton.addEventListener("click", clearField);
 taskTitleInput.addEventListener("keyup", disableButtons);
+
+function removeAllTaskItems() {
+  while (taskItemParent.firstChild) {
+    taskItemParent.removeChild(taskItemParent.firstChild);
+  }
+}
 
 function clearField(event) {
   event.preventDefault();
   formField.reset();
+  removeAllTaskItems();
   togglePlusButton();
 }
 
@@ -60,6 +67,7 @@ function addTaskList(event) {
   taskItemsArr.splice(0, i);
   clearField(event);
   disableButtons();
+  removeAllTaskItems();
 }
 
 function addTaskItem(event) {
@@ -100,6 +108,7 @@ function disableButtons() {
   toggleButtons(makeTaskListButton);
   toggleButtons(clearAllButton);
 }
+
 function toggleButtons(button) {
   if (taskTitleInput.value.length > 0 && taskItemsArr.length > 0) {
     button.classList.remove("disabled-button");
