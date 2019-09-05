@@ -10,7 +10,6 @@ var formField = document.getElementById("aside-task-form-js");
 var cardCount = 0;
 var taskCardParent1 = document.getElementById("taskcard-parent1");
 var taskCardParent2 = document.getElementById("taskcard-parent2");
-var taskJustTextArr = [];
 
 
 addTaskButton.addEventListener("click", clickAddTaskButton);
@@ -60,9 +59,10 @@ function emptyTaskItemsArr() {
 
 function grabTaskDivs() {
   var taskDivArr = document.querySelectorAll(".select-me");
-  // var taskTextPar = documemt.getElementById("task-text");
+  var taskJustTextArr = [];
   for (var i = 0; i < taskDivArr.length; i++) {
-    taskJustTextArr.push(taskDivArr[i].innerText)
+    var task = new Task(taskDivArr[i].innerText, Date.now());
+    taskJustTextArr.push(task.content);
   }
 }
 
