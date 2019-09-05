@@ -24,15 +24,16 @@ function clearField(event) {
 
 function addTaskList(event) {
   event.preventDefault();
+  var taskInfo = "";
+  for (var i = 0; i < taskItemsArr.length; i++) {
+    taskInfo += taskItemsArr[i];
+  }
   taskCardParent.insertAdjacentHTML('afterbegin', `
   <div class="main-taskcard-parent-div">
     <form class="main-taskcard">
       <h2 class="form-taskcard-header">${taskTitleInput.value}</h2>
       <section class="main-taskcard-section">
-        <div class="form-taskcard-div">
-          <img class="form-taskcard-checkimg" src="assets/checkbox.svg" alt="empty checkbox circle" />
-          <p class="form-taskcard-firsttodo">sdajkshadsaas<p>
-        </div>
+        ${taskInfo}
       </section>
       <footer>
         <div class="form-footer-div">
@@ -47,6 +48,7 @@ function addTaskList(event) {
     </form>
   </div>`)
 
+  taskItemsArr.splice(0, i);
   clearField(event);
 }
 
