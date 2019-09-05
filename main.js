@@ -8,16 +8,36 @@ var taskItemsArr = [];
 var clearAllButton = document.getElementById("clear-all-button-js");
 var formField = document.getElementById("aside-task-form-js");
 var cardCount = 0;
-var taskCardParent1 = document.getElementById('taskcard-parent1');
-var taskCardParent2 = document.getElementById('taskcard-parent2');
+var taskCardParent1 = document.getElementById("taskcard-parent1");
+var taskCardParent2 = document.getElementById("taskcard-parent2");
 
 
-addTaskButton.addEventListener("click", addTaskItem);
+addTaskButton.addEventListener("click", clickAddTaskButton);
+makeTaskListButton.addEventListener("click", clickMakeTaskButton);
+clearAllButton.addEventListener("click", clickClearAllButton);
 taskItemParent.addEventListener("click", removeTaskItem);
 taskItemInput.addEventListener("keyup", togglePlusButton);
-makeTaskListButton.addEventListener("click", addTaskList);
-clearAllButton.addEventListener("click", clearField);
 taskTitleInput.addEventListener("keyup", disableButtons);
+
+function clickAddTaskButton() {
+  addTaskItem(event);
+  togglePlusButton();
+  disableButtons();
+}
+
+function clickMakeTaskButton() {
+  addTaskList(event)
+  clearField(event);
+  disableButtons();
+  removeAllTaskItems();
+}
+
+function clickClearAllButton() {
+  clearField(event);
+  removeAllTaskItems();
+  togglePlusButton();
+  emptyTaskItemsArr();
+}
 
 function removeAllTaskItems() {
   while (taskItemParent.firstChild) {
@@ -28,8 +48,12 @@ function removeAllTaskItems() {
 function clearField(event) {
   event.preventDefault();
   formField.reset();
-  removeAllTaskItems();
-  togglePlusButton();
+}
+
+function emptyTaskItemsArr() {
+  for (var i = 0; i < taskItemsArr.length; i++) {
+    taskItemsArr.splice(0, taskItemsArr.length);
+  }
 }
 
 function addTaskList(event) {
@@ -65,9 +89,7 @@ function addTaskList(event) {
     taskCardParent2.insertAdjacentHTML('afterbegin', htmlToEnter);
   }
   taskItemsArr.splice(0, i);
-  clearField(event);
-  disableButtons();
-  removeAllTaskItems();
+  //if this element contains a class of Num then array.splice(num, 1)
 }
 
 function addTaskItem(event) {
@@ -75,23 +97,21 @@ function addTaskItem(event) {
   taskItemParent.innerHTML +=  `<div class="aside-added-task-box">
       <img src="assets/delete.svg" alt="delete X icon" class="aside-added-task-icon-x" />
       <p>${taskItemInput.value}</p>
-      </div>`
+      </div>`;
   taskItemsArr.push(`<div class="form-taskcard-div">
     <img class="form-taskcard-checkimg" src="assets/checkbox.svg" alt="empty checkbox circle" />
     <p class="form-taskcard-firsttodo">${taskItemInput.value}<p>
   </div>`);
-  console.log(taskItemsArr);
   taskItemInput.value = "";
-  togglePlusButton();
-  disableButtons();
   // write new function DRY
 }
 
 function removeTaskItem(event) {
-  if (event.target.classList.contains("aside-added-task-icon-x"))
+  if (event.target.classList.contains("aside-added-task-icon-x")) {
     event.target.parentNode.remove();
     taskItemsArr.shift();
     disableButtons();
+  }
 }
 
 function togglePlusButton() {
