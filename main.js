@@ -8,7 +8,8 @@ var formField = document.getElementById("aside-task-form-js");
 var cardCount = 0;
 var taskCardParent1 = document.getElementById("taskcard-parent1");
 var taskCardParent2 = document.getElementById("taskcard-parent2");
-
+var taskInstArr = [];
+var toDoListInstArr = [];
 
 addTaskButton.addEventListener("click", clickAddTaskButton);
 makeTaskListButton.addEventListener("click", clickMakeTaskButton);
@@ -53,15 +54,17 @@ function makeToDoList() {
   for (var i = 0; i < taskDivArr.length; i++) {
     var taskcontent = taskDivArr[i].innerText;
     var task = new Task(taskcontent, Date.now());
+    taskInstArr.push(task);
     taskJustTextArr.push(task.content);
   }
   var toDoList = new ToDoList(taskTitleInput.value, taskJustTextArr, Date.now(), false);
+  toDoListInstArr.push(toDoList);
   var htmlToEnter = `
   <div class="main-taskcard-parent-div">
     <form class="main-taskcard">
       <h2 class="form-taskcard-header">${toDoList.title}</h2>
       <section class="main-taskcard-section">
-        ${toDoList.makeTaskHtml()}
+        ${makeTaskHtml(taskJustTextArr)}
       </section>
       <footer>
         <div class="form-footer-div">
@@ -86,6 +89,18 @@ function makeToDoList() {
 //refactoring this function to be a method in the class that uses toDoList.tasksArr in place of
 //passing a parameter then call toDoList.makeTaskHtml() in the HTML block above. bc we are passing
 //taskJustTextArr in as tasksArr when instantiating
+
+function makeTaskHtml(array) {
+  var taskHtml = "";
+  for (var i = 0; i < array.length; i++) {
+    taskHtml += `
+    <div class="form-taskcard-div">
+      <img class="form-taskcard-checkimg" src="assets/checkbox.svg" alt="empty checkbox circle" />
+      <p class="form-taskcard-firsttodo">${array[i]}<p>
+    </div>`;
+  }
+  return taskHtml;
+}
 
 function addTaskItem(event) {
   event.preventDefault();
