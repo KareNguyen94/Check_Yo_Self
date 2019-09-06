@@ -3,14 +3,13 @@ var addTaskButton = document.getElementById("aside-plus-button-js");
 var taskItemParent = document.getElementById("aside-section-task-items-js");
 var taskTitleInput = document.getElementById("aside-task-title-input-js");
 var makeTaskListButton = document.getElementById("make-task-button");
-// var taskCardParent = document.getElementById("main-taskcard-parent");
-var taskItemsArr = [];
 var clearAllButton = document.getElementById("clear-all-button-js");
 var formField = document.getElementById("aside-task-form-js");
 var cardCount = 0;
 var taskCardParent1 = document.getElementById("taskcard-parent1");
 var taskCardParent2 = document.getElementById("taskcard-parent2");
-
+var taskInstArr = [];
+var toDoListInstArr = [];
 
 addTaskButton.addEventListener("click", clickAddTaskButton);
 makeTaskListButton.addEventListener("click", clickMakeTaskButton);
@@ -27,7 +26,6 @@ function clickAddTaskButton() {
 
 function clickMakeTaskButton() {
   makeToDoList();
-  // addTaskList(event);
   clearField(event);
   disableButtons();
   removeAllTaskItems();
@@ -37,7 +35,6 @@ function clickClearAllButton() {
   clearField(event);
   removeAllTaskItems();
   togglePlusButton();
-  emptyTaskItemsArr();
 }
 
 function removeAllTaskItems() {
@@ -51,23 +48,17 @@ function clearField(event) {
   formField.reset();
 }
 
-function emptyTaskItemsArr() {
-  for (var i = 0; i < taskItemsArr.length; i++) {
-    taskItemsArr.splice(0, taskItemsArr.length);
-  }
-}
-
 function makeToDoList() {
   var taskDivArr = document.querySelectorAll(".select-me");
   var taskJustTextArr = [];
   for (var i = 0; i < taskDivArr.length; i++) {
-    console.log(taskDivArr[i].innerText);
     var taskcontent = taskDivArr[i].innerText;
     var task = new Task(taskcontent, Date.now());
-    console.log(task);
+    taskInstArr.push(task);
     taskJustTextArr.push(task.content);
   }
   var toDoList = new ToDoList(taskTitleInput.value, taskJustTextArr, Date.now(), false);
+  toDoListInstArr.push(toDoList);
   var htmlToEnter = `
   <div class="main-taskcard-parent-div">
     <form class="main-taskcard">
@@ -95,6 +86,9 @@ function makeToDoList() {
     taskCardParent2.insertAdjacentHTML('afterbegin', htmlToEnter);
   }
 }
+//refactoring this function to be a method in the class that uses toDoList.tasksArr in place of
+//passing a parameter then call toDoList.makeTaskHtml() in the HTML block above. bc we are passing
+//taskJustTextArr in as tasksArr when instantiating
 
 function makeTaskHtml(array) {
   var taskHtml = "";
@@ -108,42 +102,6 @@ function makeTaskHtml(array) {
   return taskHtml;
 }
 
-// function addTaskList(event) {
-//   event.preventDefault();
-//   var taskInfo = "";
-//   for (var i = 0; i < taskItemsArr.length; i++) {
-//     taskInfo += taskItemsArr[i];
-//   }
-  // var htmlToEnter = `
-  // <div class="main-taskcard-parent-div">
-  //   <form class="main-taskcard">
-  //     <h2 class="form-taskcard-header">${taskTitleInput.value}</h2>
-  //     <section class="main-taskcard-section">
-  //       ${taskInfo}
-  //     </section>
-  //     <footer>
-  //       <div class="form-footer-div">
-  //         <img class="form-taskcard-checkimg" src="assets/urgent.svg" alt="lightning bolt icon" />
-  //         <p class="form-taskcard-todo">URGENT<p>
-  //       </div>
-  //       <div class="form-footer-div">
-  //         <img class="form-taskcard-checkimg" src="assets/delete.svg" alt="delete X icon" />
-  //         <p class="form-taskcard-todo">DELETE<p>
-  //       </div>
-  //     </footer>
-  //   </form>
-  // </div>`;
-  // cardCount += 1;
-  // var evenOdd = cardCount % 2;
-  // if (evenOdd === 1) {
-  //   taskCardParent1.insertAdjacentHTML('afterbegin', htmlToEnter);
-  // } else {
-  //   taskCardParent2.insertAdjacentHTML('afterbegin', htmlToEnter);
-  // }
-  // taskItemsArr.splice(0, i);
-  //if this element contains a class of Num then array.splice(num, 1)
-// }
-
 function addTaskItem(event) {
   event.preventDefault();
   taskItemParent.innerHTML +=  `
@@ -151,18 +109,13 @@ function addTaskItem(event) {
         <img src="assets/delete.svg" alt="delete X icon" class="aside-added-task-icon-x" />
         <p id="task-text">${taskItemInput.value}</p>
       </div>`;
-  // taskItemsArr.push(`<div class="form-taskcard-div">
-  //   <img class="form-taskcard-checkimg" src="assets/checkbox.svg" alt="empty checkbox circle" />
-  //   <p class="form-taskcard-firsttodo">${taskItemInput.value}<p>
-  // </div>`);
   taskItemInput.value = "";
-  // write new function DRY
+  disableButtons();
 }
 
 function removeTaskItem(event) {
   if (event.target.classList.contains("aside-added-task-icon-x")) {
     event.target.parentNode.remove();
-    taskItemsArr.shift();
     disableButtons();
   }
 }
@@ -183,7 +136,7 @@ function disableButtons() {
 }
 
 function toggleButtons(button) {
-  if (taskTitleInput.value.length > 0) {
+  if (taskTitleInput.value.length > 0 && document.getElementsByClassName('select-me').length > 0) {
     button.classList.remove("disabled-button");
     button.disabled = false;
   } else {
@@ -191,4 +144,3 @@ function toggleButtons(button) {
     button.disabled = true;
   }
 }
-// && taskItemsArr.length > 0
