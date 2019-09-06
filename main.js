@@ -26,8 +26,8 @@ function clickAddTaskButton() {
 }
 
 function clickMakeTaskButton() {
-  grabTaskDivs();
-  addTaskList(event);
+  makeToDoList();
+  // addTaskList(event);
   clearField(event);
   disableButtons();
   removeAllTaskItems();
@@ -57,27 +57,23 @@ function emptyTaskItemsArr() {
   }
 }
 
-function grabTaskDivs() {
+function makeToDoList() {
   var taskDivArr = document.querySelectorAll(".select-me");
   var taskJustTextArr = [];
   for (var i = 0; i < taskDivArr.length; i++) {
-    var task = new Task(taskDivArr[i].innerText, Date.now());
+    console.log(taskDivArr[i].innerText);
+    var taskcontent = taskDivArr[i].innerText;
+    var task = new Task(taskcontent, Date.now());
+    console.log(task);
     taskJustTextArr.push(task.content);
   }
-}
-
-function addTaskList(event) {
-  event.preventDefault();
-  var taskInfo = "";
-  for (var i = 0; i < taskItemsArr.length; i++) {
-    taskInfo += taskItemsArr[i];
-  }
+  var toDoList = new ToDoList(taskTitleInput.value, taskJustTextArr, Date.now(), false);
   var htmlToEnter = `
   <div class="main-taskcard-parent-div">
     <form class="main-taskcard">
-      <h2 class="form-taskcard-header">${taskTitleInput.value}</h2>
+      <h2 class="form-taskcard-header">${toDoList.title}</h2>
       <section class="main-taskcard-section">
-        ${taskInfo}
+        ${makeTaskHtml(taskJustTextArr)}
       </section>
       <footer>
         <div class="form-footer-div">
@@ -98,9 +94,55 @@ function addTaskList(event) {
   } else {
     taskCardParent2.insertAdjacentHTML('afterbegin', htmlToEnter);
   }
-  taskItemsArr.splice(0, i);
-  //if this element contains a class of Num then array.splice(num, 1)
 }
+
+function makeTaskHtml(array) {
+  var taskHtml = "";
+  for (var i = 0; i < array.length; i++) {
+    taskHtml += `
+    <div class="form-taskcard-div">
+      <img class="form-taskcard-checkimg" src="assets/checkbox.svg" alt="empty checkbox circle" />
+      <p class="form-taskcard-firsttodo">${array[i]}<p>
+    </div>`;
+  }
+  return taskHtml;
+}
+
+// function addTaskList(event) {
+//   event.preventDefault();
+//   var taskInfo = "";
+//   for (var i = 0; i < taskItemsArr.length; i++) {
+//     taskInfo += taskItemsArr[i];
+//   }
+  // var htmlToEnter = `
+  // <div class="main-taskcard-parent-div">
+  //   <form class="main-taskcard">
+  //     <h2 class="form-taskcard-header">${taskTitleInput.value}</h2>
+  //     <section class="main-taskcard-section">
+  //       ${taskInfo}
+  //     </section>
+  //     <footer>
+  //       <div class="form-footer-div">
+  //         <img class="form-taskcard-checkimg" src="assets/urgent.svg" alt="lightning bolt icon" />
+  //         <p class="form-taskcard-todo">URGENT<p>
+  //       </div>
+  //       <div class="form-footer-div">
+  //         <img class="form-taskcard-checkimg" src="assets/delete.svg" alt="delete X icon" />
+  //         <p class="form-taskcard-todo">DELETE<p>
+  //       </div>
+  //     </footer>
+  //   </form>
+  // </div>`;
+  // cardCount += 1;
+  // var evenOdd = cardCount % 2;
+  // if (evenOdd === 1) {
+  //   taskCardParent1.insertAdjacentHTML('afterbegin', htmlToEnter);
+  // } else {
+  //   taskCardParent2.insertAdjacentHTML('afterbegin', htmlToEnter);
+  // }
+  // taskItemsArr.splice(0, i);
+  //if this element contains a class of Num then array.splice(num, 1)
+// }
 
 function addTaskItem(event) {
   event.preventDefault();
