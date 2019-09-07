@@ -5,6 +5,11 @@ class ToDoList {
     this.id = id || Date.now();
     this.urgent = urgent || false;
   }
+
+  updateToDo() {
+    // update this.urgent to true
+  }
+
 }
 
 // module.exports = ToDoList;
