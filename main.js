@@ -5,11 +5,13 @@ var taskTitleInput = document.getElementById("aside-task-title-input-js");
 var makeTaskListButton = document.getElementById("make-task-button");
 var clearAllButton = document.getElementById("clear-all-button-js");
 var formField = document.getElementById("aside-task-form-js");
-var cardCount = 0;
 var taskCardParent1 = document.getElementById("taskcard-parent1");
 var taskCardParent2 = document.getElementById("taskcard-parent2");
+var defaultTaskCard = document.getElementById("default-todo-card");
 var taskInstArr = [];
 var toDoListInstArr = [];
+var leftColumnHeight = 0;
+var rightColumnHeight = 0;
 
 addTaskButton.addEventListener("click", clickAddTaskButton);
 makeTaskListButton.addEventListener("click", clickMakeTaskButton);
@@ -25,6 +27,7 @@ function clickAddTaskButton() {
 }
 
 function clickMakeTaskButton() {
+  removeDefaultCard();
   makeToDoList();
   clearField(event);
   disableButtons();
@@ -48,6 +51,11 @@ function clearField(event) {
   formField.reset();
 }
 
+function removeDefaultCard() {
+  if(toDoListInstArr.length === 0)
+    defaultTaskCard.remove();
+}
+
 function makeToDoList() {
   var taskDivArr = document.querySelectorAll(".select-me");
   var taskJustTextArr = [];
@@ -60,7 +68,7 @@ function makeToDoList() {
   var toDoList = new ToDoList(taskTitleInput.value, taskJustTextArr, Date.now(), false);
   toDoListInstArr.push(toDoList);
   var htmlToEnter = `
-  <div class="main-taskcard-parent-div">
+  <div class="main-taskcard-parent-div item">
     <form class="main-taskcard">
       <h2 class="form-taskcard-header">${toDoList.title}</h2>
       <section class="main-taskcard-section">
@@ -78,17 +86,20 @@ function makeToDoList() {
       </footer>
     </form>
   </div>`;
-  cardCount += 1;
-  var evenOdd = cardCount % 2;
-  if (evenOdd === 1) {
-    taskCardParent1.insertAdjacentHTML('afterbegin', htmlToEnter);
-  } else {
-    taskCardParent2.insertAdjacentHTML('afterbegin', htmlToEnter);
-  }
+  taskCardParent1.insertAdjacentHTML('afterbegin', htmlToEnter);
+  var toDoListCard = document.getElementsByClassName('item');
+  var toDoListMasonry = document.querySelector(".main-taskcard-parent-div");
+      for (var i = 0; i < toDoListCard.length; i++) {
+          if (leftColumnHeight > rightColumnHeight) {
+              rightColumnHeight += (i + 1);
+              toDoListMasonry.classList.add('right');
+              return;
+          } else {
+              leftColumnHeight += (i + 1);
+              return;
+          }
+        }
 }
-//refactoring this function to be a method in the class that uses toDoList.tasksArr in place of
-//passing a parameter then call toDoList.makeTaskHtml() in the HTML block above. bc we are passing
-//taskJustTextArr in as tasksArr when instantiating
 
 function makeTaskHtml(array) {
   var taskHtml = "";
@@ -101,6 +112,24 @@ function makeTaskHtml(array) {
   }
   return taskHtml;
 }
+
+// var left_column_height = 0;
+// var right_column_height = 0;
+// var items = querySelectorAll('.item');
+// for (var i = 0; i < items.length; i++) {
+//
+//     /* this is purely to show vaird heights, the content would create the height...
+//     begin fpo: */
+//     items.eq(i).height(Math.floor(Math.random() * 100) + 10);
+//     /* end fpo: */
+//
+//     if (left_column_height > right_column_height) {
+//         right_column_height+= items.eq(i).addClass('right').outerHeight(true);
+//     } else {
+//         left_column_height+= items.eq(i).outerHeight(true);
+//
+//     }
+// }
 
 function addTaskItem(event) {
   event.preventDefault();
