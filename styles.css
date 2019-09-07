@@ -186,9 +186,9 @@ main {
 }
 
 .form-taskcard-header {
-  margin: 0px 5px 10px 5px;
+  margin: 0px 5px 0px 5px;
   padding: 10px;
-  border-bottom: 2px solid #C7D3D8;
+  /* border-bottom: 2px solid #C7D3D8; */
   color: #1F1F3D;
 }
 
@@ -197,6 +197,9 @@ main {
   flex-direction: column;
   align-items: flex-start;
   height: auto;
+  border-top: 2px solid #C7D3D8;
+  border-bottom: 2px solid #C7D3D8;
+  padding-top: 10px;
 }
 
 .form-taskcard-div {
@@ -217,11 +220,11 @@ main {
 
 .form-taskcard-todo {
   font-size: 75%;
-  color: #3C6577;
+  /* color: #3C6577; */
 }
 
 footer {
-  border-top: 2px solid #C7D3D8;
+  /* border-top: 2px solid #C7D3D8; */
   display: flex;
   justify-content: space-between;
 }
@@ -230,5 +233,21 @@ footer {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 10px;
+  padding: 10px;
+  color: #3C6577;
+  cursor: pointer;
+  /* margin: 10px; */
+}
+
+.urgent-card {
+  background-color: #FFE89D;
+  border-color: #FFC30C;
+}
+
+.urgent-border {
+  border-color: #FFC30C;
+}
+
+.urgent-text {
+  color: #B23A25;
 }
