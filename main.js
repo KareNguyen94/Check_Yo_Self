@@ -17,27 +17,48 @@ clearAllButton.addEventListener("click", clickClearAllButton);
 taskItemParent.addEventListener("click", removeTaskItem);
 taskItemInput.addEventListener("keyup", togglePlusButton);
 taskTitleInput.addEventListener("keyup", disableButtons);
-toDoCardSectionParent.addEventListener("click", toggleUrgentImg);
+toDoCardSectionParent.addEventListener("click", styleUrgentToDoList);
 
 // this will happen when user clicks on the img or area the img lives in
 // if this happens on event.target - the parent would need to be the main section
 // since it already exists on the dom right?
 
-function toggleUrgentImg(event) {
+function editUrgentProperty(event) {
+  var toDoListId = event.target.parentNode.parentNode.parentNode.parentNode.id;
+  for (var i = 0; i < toDoListInstArr.length; i++) {
+    if (toDoListInstArr[i].id === parseInt(toDoListId)) {
+            toDoListInstArr[i].updateToDo();
+            return toDoListInstArr[i];
+  }
+}
+  // toDoListInstArr.forEach(function(element) {
+  //       if (element.id === parseInt(toDoListId)) {
+  //         element.updateToDo();
+  //         var array = element;
+  //       }
+  //       return array;
+  //     })
+    }
+function styleUrgentToDoList(event) {
+  // console.log(editUrgentProperty(event));
+
   if (event.target.classList.contains("urgent-img")) {
-    var toDoListId = event.target.parentNode.parentNode.parentNode.parentNode.id;
-    toDoListInstArr.forEach(function(element) {
-        if (element.id === parseInt(toDoListId)) {
-          element.updateToDo();
-        }
-      })
-    console.log(toDoListInstArr);
+  var object = editUrgentProperty(event);
+  if (object.urgent === true) {
+      event.target.src = "assets/urgent-active.svg";
+      event.target.alt = "urgent lightning bolt icon";
+      event.target.parentNode.parentNode.parentNode.classList.add("urgent-card");
+      event.target.parentNode.classList.add("urgent-text");
+      event.target.parentNode.parentNode.previousElementSibling.classList.add("urgent-border");
+    } else {
+      event.target.src = "assets/urgent.svg";
+      event.target.alt = "non-urgent lightning bolt icon";
+      event.target.parentNode.parentNode.parentNode.classList.remove("urgent-card");
+      event.target.parentNode.classList.remove("urgent-text");
+      event.target.parentNode.parentNode.previousElementSibling.classList.remove("urgent-border");
     }
   }
-
-
-
-
+}
 
 //
 //   console.log(event);
@@ -61,7 +82,7 @@ function toggleUrgentImg(event) {
 //   }
 // }
 
-function styleUrgentState() {
+function styleUrgentLook() {
   event.target.closest(".urgent-icon").classList.add("urgent-text");
   event.target.closest("#main-taskcard-js").classList.add("urgent-card");
   // event.target.closest("#anything-js").classList.add("urgent-border");
