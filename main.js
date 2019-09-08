@@ -8,9 +8,7 @@ var formField = document.getElementById("aside-task-form-js");
 var cardCount = 0;
 var taskCardParent1 = document.getElementById("taskcard-parent1");
 var taskCardParent2 = document.getElementById("taskcard-parent2");
-var taskInstArr = [];
 var toDoListInstArr = [];
-var onDeckUrgentImgSrc = "assets/urgent-active.svg";
 var toDoCardSectionParent = document.getElementById("main-taskcard-parent")
 
 addTaskButton.addEventListener("click", clickAddTaskButton);
@@ -26,29 +24,42 @@ toDoCardSectionParent.addEventListener("click", toggleUrgentImg);
 // since it already exists on the dom right?
 
 function toggleUrgentImg(event) {
-  console.log(event);
-  console.log(event.target.firstChild);
-
-  // if (event.target.id === "urgent-icon" && onDeckUrgentImgSrc === "assets/urgent-active.svg") {
-  // if (toDoList.urgent === false) {but how will it know which toDoList instantiation?
-  if (event.target.closest(".urgent-icon")) {
-    console.log(event.target.closest(".urgent-icon"));
-    event.target.closest("#urgent-img").src = "assets/urgent-active.svg";
-    event.target.closest("#urgent-img").alt = "lightning bolt icon urgent active state";
-    styleUrgentState();
-    // event.target.closest("#urgent-img").id = "urgent-active-img";
-    event.target.closest(".urgent-icon").classList.replace("urgent-icon", "urgent-active-icon");
-    console.log(event.target.closest(".urgent-active-icon"));
-    // event.target.src = "assets/urgent-active.svg";
-    // event.target.alt = "Urgent Icon Active State";
-  } else if (event.target.closest(".urgent-active-icon")) {
-      event.target.closest("#urgent-img").src = "assets/urgent.svg";
-      event.target.closest("#urgent-img").alt = "lightning bolt icon non-urgent state";
-      unStyleUrgentState();
-      // event.target.closest("#urgent-active-img").id = "urgent-img";
-      event.target.closest(".urgent-active-icon").classList.replace("urgent-active-icon", "urgent-icon");
+  if (event.target.classList.contains("urgent-img")) {
+    var toDoListId = event.target.parentNode.parentNode.parentNode.parentNode.id;
+    toDoListInstArr.forEach(function(element) {
+        if (element.id === parseInt(toDoListId)) {
+          element.updateToDo();
+        }
+      })
+    console.log(toDoListInstArr);
+    }
   }
-}
+
+
+
+
+
+//
+//   console.log(event);
+//   // if (event.target.id === "urgent-icon" && onDeckUrgentImgSrc === "assets/urgent-active.svg") {
+//   // if (toDoList.urgent === false) {but how will it know which toDoList instantiation?
+//   if (event.target.id === "urgent-img-js") {
+//     event.target.classList.contains("urgent-img").src = "assets/urgent-active.svg";
+//     event.target.classList.contains("urgent-img").alt = "urgent lightning bolt icon";
+//     styleUrgentState();
+//     // event.target.closest("#urgent-img").id = "urgent-active-img";
+//     event.target.classList.replace("urgent-icon", "urgent-active-icon");
+//     console.log(event.target.closest(".urgent-active-icon"));
+//     // event.target.src = "assets/urgent-active.svg";
+//     // event.target.alt = "Urgent Icon Active State";
+//   } else if (event.target.classList.contains("urgent-active-icon")) {
+//       event.target.classList.contains("urgent-img").src = "assets/urgent.svg";
+//       event.target.classList.contains("urgent-img").alt = "non-urgent lightning bolt icon";
+//       unStyleUrgentState();
+//       // event.target.closest("#urgent-active-img").id = "urgent-img";
+//       event.target.classList.replace("urgent-active-icon", "urgent-icon");
+//   }
+// }
 
 function styleUrgentState() {
   event.target.closest(".urgent-icon").classList.add("urgent-text");
@@ -95,25 +106,25 @@ function clearField(event) {
 
 function makeToDoList() {
   var taskDivArr = document.querySelectorAll(".select-me");
-  var taskJustTextArr = [];
+  var taskInstArr = [];
+  var id = Date.now();
   for (var i = 0; i < taskDivArr.length; i++) {
     var taskcontent = taskDivArr[i].innerText;
-    var task = new Task(taskcontent, Date.now());
+    var task = new Task(taskcontent, id);
     taskInstArr.push(task);
-    taskJustTextArr.push(task.content);
   }
-  var toDoList = new ToDoList(taskTitleInput.value, taskJustTextArr, Date.now(), false);
-  toDoListInstArr.push(toDoList);
+  var toDoList = new ToDoList(taskTitleInput.value, taskInstArr, id, false);
+  toDoListInstArr.unshift(toDoList);
   var htmlToEnter = `
-  <div class="main-taskcard-parent-div">
+  <div id="${id}" class="main-taskcard-parent-div">
     <form class="main-taskcard" id="main-taskcard-js">
-      <h2 class="form-taskcard-header">${toDoList.title}</h2>
+      <h2 class="form-taskcard-header">${toDoListInstArr[0].title}</h2>
       <section class="main-taskcard-section" id="anything-js">
-        ${makeTaskHtml(taskJustTextArr)}
+        ${makeTaskHtml(toDoListInstArr[0].tasksArr)}
       </section>
       <footer>
-        <div class="form-footer-div urgent-icon" id="urgent-icon-js">
-          <img class="form-taskcard-checkimg" id="urgent-img" src="assets/urgent.svg" alt="lightning bolt icon" />
+        <div class="form-footer-div urgent-div" id="urgent-div-js">
+          <img class="form-taskcard-checkimg urgent-img" id="urgent-img-js" src="assets/urgent.svg" alt="non-urgent lightning bolt icon" />
           <p class="form-taskcard-todo">URGENT<p>
         </div>
         <div class="form-footer-div">
@@ -141,7 +152,7 @@ function makeTaskHtml(array) {
     taskHtml += `
     <div class="form-taskcard-div">
       <img class="form-taskcard-checkimg" src="assets/checkbox.svg" alt="empty checkbox circle" />
-      <p class="form-taskcard-firsttodo">${array[i]}<p>
+      <p class="form-taskcard-firsttodo">${array[i].content}<p>
     </div>`;
   }
   return taskHtml;
