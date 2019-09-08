@@ -213,7 +213,8 @@ main {
 }
 
 .form-taskcard-checkimg {
-  margin-right: 10px;
+  /* margin-right: 10px; */
+  padding-right: 10px;
   height: 25px;
   width: 25px;
 }
