@@ -5,6 +5,7 @@ var taskTitleInput = document.getElementById("aside-task-title-input-js");
 var makeTaskListButton = document.getElementById("make-task-button");
 var clearAllButton = document.getElementById("clear-all-button-js");
 var formField = document.getElementById("aside-task-form-js");
+var toDoCardSectionParent = document.getElementById("main-taskcard-parent")
 var taskCardParent = document.getElementById("taskcard-parent");
 var defaultTaskCard = document.getElementById("default-todo-card");
 var toDoListInstArr = [];
@@ -18,6 +19,36 @@ taskItemParent.addEventListener("click", removeTaskItem);
 taskItemInput.addEventListener("keyup", togglePlusButton);
 taskTitleInput.addEventListener("keyup", disableButtons);
 taskCardParent.addEventListener("click", removeToDoList);
+toDoCardSectionParent.addEventListener("click", styleUrgentToDoList);
+
+function editUrgentProperty(event) {
+  var toDoListId = event.target.parentNode.parentNode.parentNode.parentNode.id;
+  for (var i = 0; i < toDoListInstArr.length; i++) {
+    if (toDoListInstArr[i].id === parseInt(toDoListId)) {
+        toDoListInstArr[i].updateToDo();
+        return toDoListInstArr[i];
+      }
+  }
+}
+
+function styleUrgentToDoList(event) {
+  if (event.target.classList.contains("urgent-img")) {
+  var object = editUrgentProperty(event);
+  if (object.urgent === true) {
+      event.target.src = "assets/urgent-active.svg";
+      event.target.alt = "urgent lightning bolt icon";
+      event.target.parentNode.parentNode.parentNode.classList.add("urgent-card");
+      event.target.parentNode.classList.add("urgent-text");
+      event.target.parentNode.parentNode.previousElementSibling.classList.add("urgent-border");
+    } else {
+      event.target.src = "assets/urgent.svg";
+      event.target.alt = "non-urgent lightning bolt icon";
+      event.target.parentNode.parentNode.parentNode.classList.remove("urgent-card");
+      event.target.parentNode.classList.remove("urgent-text");
+      event.target.parentNode.parentNode.previousElementSibling.classList.remove("urgent-border");
+    }
+  }
+}
 
 function clickAddTaskButton() {
   addTaskItem(event);
@@ -74,8 +105,8 @@ function makeToDoList() {
         ${makeTaskHtml(toDoListInstArr[0].tasksArr)}
       </section>
       <footer>
-        <div class="form-footer-div">
-          <img class="form-taskcard-checkimg" src="assets/urgent.svg" alt="lightning bolt icon" />
+        <div class="form-footer-div urgent-div" id="urgent-div-js">
+          <img class="form-taskcard-checkimg urgent-img" id="urgent-img-js" src="assets/urgent.svg" alt="non-urgent lightning bolt icon" />
           <p class="form-taskcard-todo">URGENT<p>
         </div>
         <div class="form-footer-div">
