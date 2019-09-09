@@ -5,11 +5,12 @@ var taskTitleInput = document.getElementById("aside-task-title-input-js");
 var makeTaskListButton = document.getElementById("make-task-button");
 var clearAllButton = document.getElementById("clear-all-button-js");
 var formField = document.getElementById("aside-task-form-js");
-var cardCount = 0;
-var taskCardParent1 = document.getElementById("taskcard-parent1");
-var taskCardParent2 = document.getElementById("taskcard-parent2");
-var toDoListInstArr = [];
 var toDoCardSectionParent = document.getElementById("main-taskcard-parent")
+var taskCardParent = document.getElementById("taskcard-parent");
+var defaultTaskCard = document.getElementById("default-todo-card");
+var toDoListInstArr = [];
+var leftColumnHeight = 0;
+var rightColumnHeight = 0;
 
 addTaskButton.addEventListener("click", clickAddTaskButton);
 makeTaskListButton.addEventListener("click", clickMakeTaskButton);
@@ -17,6 +18,7 @@ clearAllButton.addEventListener("click", clickClearAllButton);
 taskItemParent.addEventListener("click", removeTaskItem);
 taskItemInput.addEventListener("keyup", togglePlusButton);
 taskTitleInput.addEventListener("keyup", disableButtons);
+taskCardParent.addEventListener("click", removeToDoList);
 toDoCardSectionParent.addEventListener("click", styleUrgentToDoList);
 
 function editUrgentProperty(event) {
@@ -55,6 +57,7 @@ function clickAddTaskButton() {
 }
 
 function clickMakeTaskButton() {
+  removeDefaultCard();
   makeToDoList();
   clearField(event);
   disableButtons();
@@ -78,22 +81,27 @@ function clearField(event) {
   formField.reset();
 }
 
+function removeDefaultCard() {
+  if(toDoListInstArr.length === 0)
+    defaultTaskCard.remove();
+}
+
 function makeToDoList() {
   var taskDivArr = document.querySelectorAll(".select-me");
-  var taskInstArr = [];
+  var taskInstArray = [];
   var id = Date.now();
   for (var i = 0; i < taskDivArr.length; i++) {
     var taskcontent = taskDivArr[i].innerText;
-    var task = new Task(taskcontent, id);
-    taskInstArr.push(task);
+    var task = new Task(taskcontent);
+    taskInstArray.push(task);
   }
-  var toDoList = new ToDoList(taskTitleInput.value, taskInstArr, id, false);
+  var toDoList = new ToDoList(taskTitleInput.value, taskInstArray, id, false);
   toDoListInstArr.unshift(toDoList);
   var htmlToEnter = `
-  <div id="${id}" class="main-taskcard-parent-div">
-    <form class="main-taskcard" id="main-taskcard-js">
+  <div id="${id}" class="main-taskcard-parent-div item">
+    <form class="main-taskcard">
       <h2 class="form-taskcard-header">${toDoListInstArr[0].title}</h2>
-      <section class="main-taskcard-section" id="anything-js">
+      <section class="main-taskcard-section">
         ${makeTaskHtml(toDoListInstArr[0].tasksArr)}
       </section>
       <footer>
@@ -102,29 +110,32 @@ function makeToDoList() {
           <p class="form-taskcard-todo">URGENT<p>
         </div>
         <div class="form-footer-div">
-          <img class="form-taskcard-checkimg" src="assets/delete.svg" alt="delete X icon" />
+          <img class="delete-list form-taskcard-checkimg" src="assets/delete.svg" alt="delete X icon" />
           <p class="form-taskcard-todo">DELETE<p>
         </div>
       </footer>
     </form>
   </div>`;
-  cardCount += 1;
-  var evenOdd = cardCount % 2;
-  if (evenOdd === 1) {
-    taskCardParent1.insertAdjacentHTML('afterbegin', htmlToEnter);
-  } else {
-    taskCardParent2.insertAdjacentHTML('afterbegin', htmlToEnter);
-  }
+  taskCardParent.insertAdjacentHTML('afterbegin', htmlToEnter);
+  var toDoListCard = document.getElementsByClassName('item');
+  var toDoListMasonry = document.querySelector(".main-taskcard-parent-div");
+      for (var i = 0; i < toDoListCard.length; i++) {
+          if (leftColumnHeight > rightColumnHeight) {
+              rightColumnHeight += (i + 1);
+              toDoListMasonry.classList.add('right');
+              return;
+          } else {
+              leftColumnHeight += (i + 1);
+              return;
+          }
+        }
 }
-//refactoring this function to be a method in the class that uses toDoList.tasksArr in place of
-//passing a parameter then call toDoList.makeTaskHtml() in the HTML block above. bc we are passing
-//taskJustTextArr in as tasksArr when instantiating
 
 function makeTaskHtml(array) {
   var taskHtml = "";
   for (var i = 0; i < array.length; i++) {
     taskHtml += `
-    <div class="form-taskcard-div">
+    <div id="${array[i].id}" class="form-taskcard-div">
       <img class="form-taskcard-checkimg" src="assets/checkbox.svg" alt="empty checkbox circle" />
       <p class="form-taskcard-firsttodo">${array[i].content}<p>
     </div>`;
@@ -141,6 +152,16 @@ function addTaskItem(event) {
       </div>`;
   taskItemInput.value = "";
   disableButtons();
+}
+
+function removeToDoList() {
+  if(event.target.classList.contains("delete-list")) {
+    var toDoListId = event.target.parentNode.parentNode.parentNode.parentNode.id;
+    toDoListInstArr = toDoListInstArr.filter(function(toDoList) {
+      return toDoList.id !== parseInt(toDoListId);
+    });
+    event.target.parentNode.parentNode.parentNode.parentNode.remove();
+  }
 }
 
 function removeTaskItem(event) {

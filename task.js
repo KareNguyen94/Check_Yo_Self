@@ -1,9 +1,6 @@
 class Task {
-  constructor(content, id) {
+  constructor(content) {
     this.content = content;
-    this.id = id || Date.now();
+    this.id = Date.now() + this.content;
   }
 }
-
-
-// module.exports = Task;

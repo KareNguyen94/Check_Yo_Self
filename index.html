@@ -14,34 +14,39 @@
         <input class="header-search-input" type="text" placeholder="Search">
       </div>
     </header>
-  <div class="main-box">
-    <aside>
-      <form class="aside-task-form" id="aside-task-form-js">
-        <label class="aside-task-form-labels" for="task-title">Task Title</label>
-        <input class="aside-task-title-input" id="aside-task-title-input-js" type="text" name="task-title">
-        <section id="aside-section-task-items-js">
+    <div class="main-box">
+      <aside>
+        <form class="aside-task-form" id="aside-task-form-js">
+          <label class="aside-task-form-labels" for="task-title">Task Title</label>
+          <input class="aside-task-title-input" id="aside-task-title-input-js" type="text" name="task-title">
+          <section id="aside-section-task-items-js">
+          </section>
+          <label class="aside-task-form-labels" for="task-item">Task Item</label>
+          <div class="aside-task-item-and-button-container">
+            <input class="aside-task-item-input" id="aside-task-item-input-js" type="text" name="task-item">
+            <button class="aside-plus-button disabled-button" id="aside-plus-button-js" disabled>+</button>
+          </div>
+          <button disabled class="aside-blue-button disabled-button" id="make-task-button">Make Task List</button>
+          <button disabled class="aside-blue-button disabled-button" id="clear-all-button-js" type="button">Clear All</button>
+        </form>
+        <section class="aside-bottom-section">
+          <button class="aside-blue-button">Filter by Urgency</button>
         </section>
-        <label class="aside-task-form-labels" for="task-item">Task Item</label>
-        <div class="aside-task-item-and-button-container">
-          <input class="aside-task-item-input" id="aside-task-item-input-js" type="text" name="task-item">
-          <button class="aside-plus-button disabled-button" id="aside-plus-button-js" disabled>+</button>
-        </div>
-        <button disabled class="aside-blue-button disabled-button" id="make-task-button">Make Task List</button>
-        <button disabled class="aside-blue-button disabled-button" id="clear-all-button-js" type="button">Clear All</button>
-      </form>
-      <section class="aside-bottom-section">
-        <button class="aside-blue-button">Filter by Urgency</button>
-      </section>
-    </aside>
-      <main id="main-taskcard-parent">
-        <section class="main-taskcard-parent-section" id="taskcard-parent1">
-        </section>
-        <section class="main-taskcard-parent-section" id="taskcard-parent2">
-        </section>
-      </main>
-      <script src="todo-list.js"></script>
-      <script src="task.js"></script>
-      <script src="main.js"></script>
+      </aside>
+        <main id="main-taskcard-parent">
+          <section id="default-todo-card" class="main-default-taskcard">
+            <h3 class="default-card-header">WHAT ARE YOU WAITING FOR!?</h3>
+            <h2 class="default-card-header"> GET TO WORK! </h2>
+            <section>
+              <img class="giphy" src="https://media.giphy.com/media/fVeAI9dyD5ssIFyOyM/giphy.gif" alt="video of octopus laying brick" />
+            </section>
+          </section>
+          <section class="main-taskcard-parent-section" id="taskcard-parent">
+          </section>
+        </main>
+        <script src="todo-list.js"></script>
+        <script src="task.js"></script>
+        <script src="main.js"></script>
     </div>
   </body>
 </html>
