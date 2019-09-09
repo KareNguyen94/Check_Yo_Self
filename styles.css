@@ -87,6 +87,7 @@ aside {
   padding: 2.4%;
   border: 2px solid #1F1F3D;
   border-radius: 3px;
+  outline: none;
 }
 
 .aside-added-task-box {
@@ -117,6 +118,7 @@ aside {
   padding: 2.7%;
   width: 87%;
   border: none;
+  outline: none;
 }
 
 .aside-plus-button {
@@ -142,6 +144,7 @@ aside {
   border-radius: 3px;
   margin: 12px 0px;
   width: 100%;
+  outline: none;
 }
 
 .disabled-button {
@@ -159,24 +162,55 @@ aside {
 /* need to format plus button more */
 
 main {
-  display: flex;
   background-color: #F3F6F7;
   width: 75%;
   height: 1250px;
   overflow: auto;
 }
 
+.main-default-taskcard {
+  height: 520px;
+  width: 65%;
+  border: 10px solid #D77A61;
+  text-align: center;
+  margin: 50px auto;
+  background-color: #D3E9FF;
+  border-radius: 2%;
+}
+
+.giphy {
+  margin: 5px auto 15px;
+  height: 400px;
+  width: 600px;
+  border-radius: 2%;
+}
+
+.default-card-header {
+border-bottom: 2px solid #D3E9FF;
+padding: 5px;
+color: #EFF1F3;
+background-color: #253963;
+}
+
 .main-taskcard-parent-section {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 50%;
+  width: 100%;
+  display: block;
 }
 
 .main-taskcard-parent-div {
-  width: 90%;
-  margin: 10px;
-  box-sizing: border-box;
+  width: 46%;
+  display: block;
+  margin: 2%;
+}
+
+.item {
+  float: left;
+  clear: left;
+}
+
+.right {
+  float: right;
+  clear: right;
 }
 
 .main-taskcard {
