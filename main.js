@@ -19,29 +19,17 @@ taskItemInput.addEventListener("keyup", togglePlusButton);
 taskTitleInput.addEventListener("keyup", disableButtons);
 toDoCardSectionParent.addEventListener("click", styleUrgentToDoList);
 
-// this will happen when user clicks on the img or area the img lives in
-// if this happens on event.target - the parent would need to be the main section
-// since it already exists on the dom right?
-
 function editUrgentProperty(event) {
   var toDoListId = event.target.parentNode.parentNode.parentNode.parentNode.id;
   for (var i = 0; i < toDoListInstArr.length; i++) {
     if (toDoListInstArr[i].id === parseInt(toDoListId)) {
-            toDoListInstArr[i].updateToDo();
-            return toDoListInstArr[i];
+        toDoListInstArr[i].updateToDo();
+        return toDoListInstArr[i];
+      }
   }
 }
-  // toDoListInstArr.forEach(function(element) {
-  //       if (element.id === parseInt(toDoListId)) {
-  //         element.updateToDo();
-  //         var array = element;
-  //       }
-  //       return array;
-  //     })
-    }
-function styleUrgentToDoList(event) {
-  // console.log(editUrgentProperty(event));
 
+function styleUrgentToDoList(event) {
   if (event.target.classList.contains("urgent-img")) {
   var object = editUrgentProperty(event);
   if (object.urgent === true) {
@@ -59,41 +47,6 @@ function styleUrgentToDoList(event) {
     }
   }
 }
-
-//
-//   console.log(event);
-//   // if (event.target.id === "urgent-icon" && onDeckUrgentImgSrc === "assets/urgent-active.svg") {
-//   // if (toDoList.urgent === false) {but how will it know which toDoList instantiation?
-//   if (event.target.id === "urgent-img-js") {
-//     event.target.classList.contains("urgent-img").src = "assets/urgent-active.svg";
-//     event.target.classList.contains("urgent-img").alt = "urgent lightning bolt icon";
-//     styleUrgentState();
-//     // event.target.closest("#urgent-img").id = "urgent-active-img";
-//     event.target.classList.replace("urgent-icon", "urgent-active-icon");
-//     console.log(event.target.closest(".urgent-active-icon"));
-//     // event.target.src = "assets/urgent-active.svg";
-//     // event.target.alt = "Urgent Icon Active State";
-//   } else if (event.target.classList.contains("urgent-active-icon")) {
-//       event.target.classList.contains("urgent-img").src = "assets/urgent.svg";
-//       event.target.classList.contains("urgent-img").alt = "non-urgent lightning bolt icon";
-//       unStyleUrgentState();
-//       // event.target.closest("#urgent-active-img").id = "urgent-img";
-//       event.target.classList.replace("urgent-active-icon", "urgent-icon");
-//   }
-// }
-
-function styleUrgentLook() {
-  event.target.closest(".urgent-icon").classList.add("urgent-text");
-  event.target.closest("#main-taskcard-js").classList.add("urgent-card");
-  // event.target.closest("#anything-js").classList.add("urgent-border");
-}
-
-function unStyleUrgentState() {
-  event.target.closest(".urgent-active-icon").classList.remove("urgent-text");
-  event.target.closest("#main-taskcard-js").classList.remove("urgent-card");
-  // event.target.closest("#anything-js").classList.remove("urgent-border");
-}
-
 
 function clickAddTaskButton() {
   addTaskItem(event);

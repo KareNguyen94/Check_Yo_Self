@@ -8,13 +8,9 @@ class ToDoList {
 
   updateToDo() {
     this.urgent = !this.urgent;
-    // update this.urgent to true
   }
-
 }
 
-// module.exports = ToDoList;
-
 // there is no way for a user to pass through
-// urgent as an argument so shoudl we remove that?
+// urgent as an argument so should we remove that?
 // and just build it as a hard coded parameter?
