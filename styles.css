@@ -280,3 +280,8 @@ footer {
 .urgent-text {
   color: #B23A25;
 }
+
+.completed-task {
+  color: #3c6577;
+  font-style: italic;
+}

@@ -11,6 +11,7 @@ var defaultTaskCard = document.getElementById("default-todo-card");
 var toDoListInstArr = [];
 var leftColumnHeight = 0;
 var rightColumnHeight = 0;
+var lastTaskId = 0;
 
 addTaskButton.addEventListener("click", clickAddTaskButton);
 makeTaskListButton.addEventListener("click", clickMakeTaskButton);
@@ -19,7 +20,7 @@ taskItemParent.addEventListener("click", removeTaskItem);
 taskItemInput.addEventListener("keyup", togglePlusButton);
 taskTitleInput.addEventListener("keyup", disableButtons);
 taskCardParent.addEventListener("click", removeToDoList);
-toDoCardSectionParent.addEventListener("click", styleUrgentToDoList);
+toDoCardSectionParent.addEventListener("click", clickToDoCard);
 
 function editUrgentProperty(event) {
   var toDoListId = event.target.parentNode.parentNode.parentNode.parentNode.id;
@@ -48,6 +49,39 @@ function styleUrgentToDoList(event) {
       event.target.parentNode.parentNode.previousElementSibling.classList.remove("urgent-border");
     }
   }
+}
+
+function completeTask(event) {
+  var taskId = event.target.parentNode.id
+  for (var i = 0; i < toDoListInstArr.length; i++) {
+    var taskArray = toDoListInstArr[i].tasksArr;
+    for (var i = 0; i < taskArray.length; i++) {
+      if (taskArray[i].id.toString() === taskId) {
+        taskArray[i].updateTask();
+        return taskArray[i];
+      }
+    }
+  }
+}
+
+function styleTask(event) {
+  if (event.target.classList.contains("empty-circle")) {
+    var taskObject = completeTask(event);
+    if(taskObject.complete === true) {
+      event.target.src = "assets/checkbox-active.svg";
+      event.target.alt = "checked off circle";
+      event.target.nextElementSibling.classList.add("completed-task");
+    } else {
+      event.target.src = "assets/checkbox.svg";
+      event.target.alt = "empty checkbox circle";
+      event.target.nextElementSibling.classList.remove("completed-task");
+    }
+  }
+}
+
+function clickToDoCard() {
+  styleUrgentToDoList(event);
+  styleTask(event);
 }
 
 function clickAddTaskButton() {
@@ -92,7 +126,8 @@ function makeToDoList() {
   var id = Date.now();
   for (var i = 0; i < taskDivArr.length; i++) {
     var taskcontent = taskDivArr[i].innerText;
-    var task = new Task(taskcontent);
+    var task = new Task(taskcontent, lastTaskId);
+    lastTaskId ++;
     taskInstArray.push(task);
   }
   var toDoList = new ToDoList(taskTitleInput.value, taskInstArray, id, false);
@@ -136,7 +171,7 @@ function makeTaskHtml(array) {
   for (var i = 0; i < array.length; i++) {
     taskHtml += `
     <div id="${array[i].id}" class="form-taskcard-div">
-      <img class="form-taskcard-checkimg" src="assets/checkbox.svg" alt="empty checkbox circle" />
+      <img class="form-taskcard-checkimg empty-circle" src="assets/checkbox.svg" alt="empty checkbox circle" />
       <p class="form-taskcard-firsttodo">${array[i].content}<p>
     </div>`;
   }
@@ -155,12 +190,14 @@ function addTaskItem(event) {
 }
 
 function removeToDoList() {
-  if(event.target.classList.contains("delete-list")) {
+  if (event.target.classList.contains("delete-list")) {
+    if () {
     var toDoListId = event.target.parentNode.parentNode.parentNode.parentNode.id;
     toDoListInstArr = toDoListInstArr.filter(function(toDoList) {
       return toDoList.id !== parseInt(toDoListId);
     });
     event.target.parentNode.parentNode.parentNode.parentNode.remove();
+    }
   }
 }
 
