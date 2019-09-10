@@ -87,7 +87,7 @@ function clickToDoCard() {
 function clickAddTaskButton() {
   addTaskItem(event);
   togglePlusButton();
-  disableButtons();
+  // disableButtons();
 }
 
 function clickMakeTaskButton() {
@@ -120,18 +120,38 @@ function removeDefaultCard() {
     defaultTaskCard.remove();
 }
 
-function makeToDoList() {
+function initialInstantiation() {
   var taskDivArr = document.querySelectorAll(".select-me");
+  instantiateCard(taskTitleInput.value, instantiateTask(taskDivArr, innerText));
+}
+
+function reInstantiation() {
+  for (var i = 0; i < storageArray.length; i++) {
+  instantiateCard(storageArray[i].title, storageArray[i].tasksArr)
+  }
+  for (var i = 0; i < toDoListInstArr.length; i++) {
+    var taskArray = toDoListInstArr[i].tasksArr;
+    toDoListInstArr[i].tasksArr = instantiateTask(taskArray, content);
+  }
+}
+
+function instantiateTask(array, text) {
   var taskInstArray = [];
-  var id = Date.now();
-  for (var i = 0; i < taskDivArr.length; i++) {
-    var taskcontent = taskDivArr[i].innerText;
+  for (var i = 0; i < array.length; i++) {
+    var taskcontent = array[i].text;
     var task = new Task(taskcontent, lastTaskId);
     lastTaskId ++;
     taskInstArray.push(task);
   }
-  var toDoList = new ToDoList(taskTitleInput.value, taskInstArray, id, false);
+    return taskInstArray;
+}
+
+function instantiateCard(title, tasks) {
+  var id = Date.now();
+  var toDoList = new ToDoList(title, tasks, id, false);
   toDoListInstArr.unshift(toDoList);
+}
+
   var htmlToEnter = `
   <div data-cardid="${id}" class="main-taskcard-parent-div item">
     <form class="main-taskcard">
@@ -152,6 +172,12 @@ function makeToDoList() {
     </form>
   </div>`;
   taskCardParent.insertAdjacentHTML('afterbegin', htmlToEnter);
+
+
+  console.log(toDoListInstArr);
+    toDoList.saveToStorage(toDoListInstArr);
+
+
   var toDoListCard = document.getElementsByClassName('item');
   var toDoListMasonry = document.querySelector(".main-taskcard-parent-div");
       for (var i = 0; i < toDoListCard.length; i++) {
