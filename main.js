@@ -23,7 +23,7 @@ taskCardParent.addEventListener("click", removeToDoList);
 toDoCardSectionParent.addEventListener("click", clickToDoCard);
 
 function editUrgentProperty(event) {
-  var toDoListId = event.target.parentNode.parentNode.parentNode.parentNode.id;
+  var toDoListId = event.target.parentNode.parentNode.parentNode.parentNode.dataset.cardid;
   for (var i = 0; i < toDoListInstArr.length; i++) {
     if (toDoListInstArr[i].id === parseInt(toDoListId)) {
         toDoListInstArr[i].updateToDo();
@@ -50,15 +50,15 @@ function styleUrgentToDoList(event) {
     }
   }
 }
-
+//second for loop could not use i due to nested in other for loop so used j
 function completeTask(event) {
-  var taskId = event.target.parentNode.id
+  var taskId = event.target.parentNode.dataset.taskid;
   for (var i = 0; i < toDoListInstArr.length; i++) {
     var taskArray = toDoListInstArr[i].tasksArr;
-    for (var i = 0; i < taskArray.length; i++) {
-      if (taskArray[i].id.toString() === taskId) {
-        taskArray[i].updateTask();
-        return taskArray[i];
+    for (var j = 0; j < taskArray.length; j++) {
+      if (taskArray[j].id.toString() === taskId) {
+        taskArray[j].updateTask();
+        return taskArray[j];
       }
     }
   }
@@ -133,7 +133,7 @@ function makeToDoList() {
   var toDoList = new ToDoList(taskTitleInput.value, taskInstArray, id, false);
   toDoListInstArr.unshift(toDoList);
   var htmlToEnter = `
-  <div id="${id}" class="main-taskcard-parent-div item">
+  <div data-cardid="${id}" class="main-taskcard-parent-div item">
     <form class="main-taskcard">
       <h2 class="form-taskcard-header">${toDoListInstArr[0].title}</h2>
       <section class="main-taskcard-section">
@@ -170,7 +170,7 @@ function makeTaskHtml(array) {
   var taskHtml = "";
   for (var i = 0; i < array.length; i++) {
     taskHtml += `
-    <div id="${array[i].id}" class="form-taskcard-div">
+    <div data-taskid="${array[i].id}" class="form-taskcard-div">
       <img class="form-taskcard-checkimg empty-circle" src="assets/checkbox.svg" alt="empty checkbox circle" />
       <p class="form-taskcard-firsttodo">${array[i].content}<p>
     </div>`;
@@ -189,12 +189,28 @@ function addTaskItem(event) {
   disableButtons();
 }
 
+function isolateToDoList(event) {
+  var toDoListId = event.target.parentNode.parentNode.parentNode.parentNode.dataset.cardid;
+  for (var i = 0; i < toDoListInstArr.length; i++) {
+    if (toDoListInstArr[i].id === parseInt(toDoListId)) {
+        return toDoListInstArr[i];
+      }
+  }
+}
+
+function isTheyDone(array) {
+  return array.complete === true;
+}
+
 function removeToDoList() {
   if (event.target.classList.contains("delete-list")) {
-    if () {
-    var toDoListId = event.target.parentNode.parentNode.parentNode.parentNode.id;
-    toDoListInstArr = toDoListInstArr.filter(function(toDoList) {
-      return toDoList.id !== parseInt(toDoListId);
+    var toDoList = isolateToDoList(event);
+    var array = toDoList.tasksArr;
+    var test = array.every(isTheyDone);
+    if (test === true) {
+      var toDoListId = event.target.parentNode.parentNode.parentNode.parentNode.dataset.cardid;
+      toDoListInstArr = toDoListInstArr.filter(function(toDoList) {
+        return toDoList.id !== parseInt(toDoListId);
     });
     event.target.parentNode.parentNode.parentNode.parentNode.remove();
     }
