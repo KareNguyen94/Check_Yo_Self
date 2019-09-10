@@ -120,7 +120,7 @@ function removeDefaultCard() {
     defaultTaskCard.remove();
 }
 
-function makeToDoList() {
+function instantiate() {
   var taskDivArr = document.querySelectorAll(".select-me");
   var taskInstArray = [];
   var id = Date.now();
@@ -132,6 +132,8 @@ function makeToDoList() {
   }
   var toDoList = new ToDoList(taskTitleInput.value, taskInstArray, id, false);
   toDoListInstArr.unshift(toDoList);
+}
+
   var htmlToEnter = `
   <div data-cardid="${id}" class="main-taskcard-parent-div item">
     <form class="main-taskcard">
@@ -152,6 +154,12 @@ function makeToDoList() {
     </form>
   </div>`;
   taskCardParent.insertAdjacentHTML('afterbegin', htmlToEnter);
+
+
+  console.log(toDoListInstArr);
+    toDoList.saveToStorage(toDoListInstArr);
+
+
   var toDoListCard = document.getElementsByClassName('item');
   var toDoListMasonry = document.querySelector(".main-taskcard-parent-div");
       for (var i = 0; i < toDoListCard.length; i++) {

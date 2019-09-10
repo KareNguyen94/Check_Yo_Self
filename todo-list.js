@@ -8,8 +8,8 @@ class ToDoList {
   updateToDo() {
     this.urgent = !this.urgent;
   }
-  saveToStorage() {
-    var globalArrToString = JSON.stringify(toDoListInstArr);
+  saveToStorage(array) {
+    var globalArrToString = JSON.stringify(array);
     localStorage.setItem("toDoListObj", globalArrToString);
   }
   deleteFromStorage() {
