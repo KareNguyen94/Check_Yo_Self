@@ -87,7 +87,7 @@ function clickToDoCard() {
 function clickAddTaskButton() {
   addTaskItem(event);
   togglePlusButton();
-  disableButtons();
+  // disableButtons();
 }
 
 function clickMakeTaskButton() {
