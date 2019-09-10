@@ -22,6 +22,37 @@ taskTitleInput.addEventListener("keyup", disableButtons);
 taskCardParent.addEventListener("click", removeToDoList);
 toDoCardSectionParent.addEventListener("click", clickToDoCard);
 
+function clickToDoCard() {
+  styleUrgentToDoList(event);
+  styleTask(event);
+}
+
+function clickAddTaskButton() {
+  addTaskItem(event);
+  togglePlusButton();
+  disableButtons();
+}
+
+function clickMakeTaskButton() {
+  removeDefaultCard();
+  initialInstantiation();
+  createToDoListCard();
+  clearField(event);
+  disableButtons();
+  removeAllTaskItems();
+}
+
+function clickClearAllButton() {
+  clearField(event);
+  removeAllTaskItems();
+  togglePlusButton();
+}
+
+function onPageLoad() {
+  reInstantiation();
+  createToDoListCard();
+}
+
 function editUrgentProperty(event) {
   var toDoListId = event.target.parentNode.parentNode.parentNode.parentNode.dataset.cardid;
   for (var i = 0; i < toDoListInstArr.length; i++) {
@@ -79,29 +110,32 @@ function styleTask(event) {
   }
 }
 
-function clickToDoCard() {
-  styleUrgentToDoList(event);
-  styleTask(event);
+function isolateToDoList(event) {
+  var toDoListId = event.target.parentNode.parentNode.parentNode.parentNode.dataset.cardid;
+  for (var i = 0; i < toDoListInstArr.length; i++) {
+    if (toDoListInstArr[i].id === parseInt(toDoListId)) {
+        return toDoListInstArr[i];
+      }
+  }
 }
 
-function clickAddTaskButton() {
-  addTaskItem(event);
-  togglePlusButton();
-  // disableButtons();
+function isTheyDone(array) {
+  return array.complete === true;
 }
 
-function clickMakeTaskButton() {
-  removeDefaultCard();
-  makeToDoList();
-  clearField(event);
-  disableButtons();
-  removeAllTaskItems();
-}
-
-function clickClearAllButton() {
-  clearField(event);
-  removeAllTaskItems();
-  togglePlusButton();
+function removeToDoList() {
+  if (event.target.classList.contains("delete-list")) {
+    var toDoList = isolateToDoList(event);
+    var array = toDoList.tasksArr;
+    var test = array.every(isTheyDone);
+    if (test === true) {
+      var toDoListId = event.target.parentNode.parentNode.parentNode.parentNode.dataset.cardid;
+      toDoListInstArr = toDoListInstArr.filter(function(toDoList) {
+        return toDoList.id !== parseInt(toDoListId);
+    });
+    event.target.parentNode.parentNode.parentNode.parentNode.remove();
+    }
+  }
 }
 
 function removeAllTaskItems() {
@@ -120,44 +154,78 @@ function removeDefaultCard() {
     defaultTaskCard.remove();
 }
 
+// function getTaskContent() {
+//   var taskDivArr = document.querySelectorAll(".select-me");
+//   // var taskContentArray = [];
+//   // for (var i = 0; i < taskDivArr.length; i++) {
+//   //   var taskcontent = taskDivArr[i].innerText;
+//   //   taskContentArray.push(taskcontent);
+//   // }
+//   // return taskContentArray;
+// }
+
 function initialInstantiation() {
-  var taskDivArr = document.querySelectorAll(".select-me");
-  instantiateCard(taskTitleInput.value, instantiateTask(taskDivArr, innerText));
+var taskDivArr = document.querySelectorAll(".select-me");
+var taskInstantiations = instantiateInitialTask(taskDivArr);
+instantiateCard(taskTitleInput.value, taskInstantiations);
 }
 
 function reInstantiation() {
-  for (var i = 0; i < storageArray.length; i++) {
-  instantiateCard(storageArray[i].title, storageArray[i].tasksArr)
-  }
+    //pull from local storage = array of objects = storageArray
+    for (var i = 0; i < storageArray.length; i++) {
+    instantiateCard(storageArray[i].title, storageArray[i].tasksArr)
+    }
   for (var i = 0; i < toDoListInstArr.length; i++) {
-    var taskArray = toDoListInstArr[i].tasksArr;
-    toDoListInstArr[i].tasksArr = instantiateTask(taskArray, content);
+    var tasksArray = toDoListInstArr[i].tasksArr;
+    toDoListInstArr[i].tasksArr = reInstantiateTask(tasksArray);
   }
 }
 
-function instantiateTask(array, text) {
+function instantiateInitialTask(array) {
   var taskInstArray = [];
   for (var i = 0; i < array.length; i++) {
-    var taskcontent = array[i].text;
+    var taskcontent = array[i].innerText;
     var task = new Task(taskcontent, lastTaskId);
     lastTaskId ++;
     taskInstArray.push(task);
   }
-    return taskInstArray;
+  return taskInstArray;
 }
 
-function instantiateCard(title, tasks) {
+function reInstantiateTask(array) {
+  var taskInstArray = [];
+  for (var i = 0; i < array.length; i++) {
+    var taskcontent = array[i].content;
+    var task = new Task(taskcontent, lastTaskId);
+    lastTaskId ++;
+    taskInstArray.push(task);
+  }
+  return taskInstArray;
+}
+
+  function instantiateCard(title, tasks) {
   var id = Date.now();
   var toDoList = new ToDoList(title, tasks, id, false);
   toDoListInstArr.unshift(toDoList);
 }
 
+function deleteExistingCards() {
+  var selectToDoLists = document.getElementsByClassName("main-taskcard-parent-div");
+  for (var i = 0; i < selectToDoLists.length; i++) {
+    var deleteCard = event.target.classList.contains("main-taskcard-parent-div");
+    deleteCard.remove();
+  }
+}
+
+function createToDoListCard() {
+  deleteExistingCards();
+  for (var i = 0; i < toDoListInstArr.length; i++) {
   var htmlToEnter = `
-  <div data-cardid="${id}" class="main-taskcard-parent-div item">
+  <div data-cardid="${toDoListInstArr[i].id}" class="main-taskcard-parent-div item">
     <form class="main-taskcard">
-      <h2 class="form-taskcard-header">${toDoListInstArr[0].title}</h2>
+      <h2 class="form-taskcard-header">${toDoListInstArr[i].title}</h2>
       <section class="main-taskcard-section">
-        ${makeTaskHtml(toDoListInstArr[0].tasksArr)}
+        ${makeTaskHtml(toDoListInstArr[i].tasksArr)}
       </section>
       <footer>
         <div class="form-footer-div urgent-div" id="urgent-div-js">
@@ -172,12 +240,11 @@ function instantiateCard(title, tasks) {
     </form>
   </div>`;
   taskCardParent.insertAdjacentHTML('afterbegin', htmlToEnter);
+  runMasonryLayout();
+  }
+}
 
-
-  console.log(toDoListInstArr);
-    toDoList.saveToStorage(toDoListInstArr);
-
-
+function runMasonryLayout() {
   var toDoListCard = document.getElementsByClassName('item');
   var toDoListMasonry = document.querySelector(".main-taskcard-parent-div");
       for (var i = 0; i < toDoListCard.length; i++) {
@@ -213,34 +280,6 @@ function addTaskItem(event) {
       </div>`;
   taskItemInput.value = "";
   disableButtons();
-}
-
-function isolateToDoList(event) {
-  var toDoListId = event.target.parentNode.parentNode.parentNode.parentNode.dataset.cardid;
-  for (var i = 0; i < toDoListInstArr.length; i++) {
-    if (toDoListInstArr[i].id === parseInt(toDoListId)) {
-        return toDoListInstArr[i];
-      }
-  }
-}
-
-function isTheyDone(array) {
-  return array.complete === true;
-}
-
-function removeToDoList() {
-  if (event.target.classList.contains("delete-list")) {
-    var toDoList = isolateToDoList(event);
-    var array = toDoList.tasksArr;
-    var test = array.every(isTheyDone);
-    if (test === true) {
-      var toDoListId = event.target.parentNode.parentNode.parentNode.parentNode.dataset.cardid;
-      toDoListInstArr = toDoListInstArr.filter(function(toDoList) {
-        return toDoList.id !== parseInt(toDoListId);
-    });
-    event.target.parentNode.parentNode.parentNode.parentNode.remove();
-    }
-  }
 }
 
 function removeTaskItem(event) {
