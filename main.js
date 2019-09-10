@@ -130,8 +130,8 @@ function reInstantiation() {
   instantiateCard(storageArray[i].title, storageArray[i].tasksArr)
   }
   for (var i = 0; i < toDoListInstArr.length; i++) {
-    var taskArray = toDoListInstArr[i].taskArr;
-    instantiateTask(tasksArray, content);
+    var taskArray = toDoListInstArr[i].tasksArr;
+    toDoListInstArr[i].tasksArr = instantiateTask(taskArray, content);
   }
 }
 
