@@ -12,7 +12,7 @@ class ToDoList {
     var globalArrToString = JSON.stringify(array);
     localStorage.setItem("toDoListLS", globalArrToString);
   }
-  deleteFromStorage() {
-
+  deleteFromStorage(key) {
+    localStorage.removeItem(key)
   }
 }
