@@ -1,19 +1,18 @@
-var taskItemInput = document.getElementById("aside-task-item-input-js");
 var addTaskButton = document.getElementById("aside-plus-button-js");
+var clearAllButton = document.getElementById("clear-all-button-js");
+var defaultTaskCard = document.getElementById("default-todo-card");
+var formField = document.getElementById("aside-task-form-js");
+var makeTaskListButton = document.getElementById("make-task-button");
+var taskCardParent = document.getElementById("taskcard-parent");
+var taskItemInput = document.getElementById("aside-task-item-input-js");
 var taskItemParent = document.getElementById("aside-section-task-items-js");
 var taskTitleInput = document.getElementById("aside-task-title-input-js");
-var makeTaskListButton = document.getElementById("make-task-button");
-var clearAllButton = document.getElementById("clear-all-button-js");
-var formField = document.getElementById("aside-task-form-js");
 var toDoCardSectionParent = document.getElementById("main-taskcard-parent")
-var taskCardParent = document.getElementById("taskcard-parent");
-var defaultTaskCard = document.getElementById("default-todo-card");
 var toDoListInstArr = [];
 var leftColumnHeight = 0;
 var rightColumnHeight = 0;
-var lastTaskId = 0;
 var lastCardId = 0;
-
+var lastTaskId = 0;
 
 addTaskButton.addEventListener("click", clickAddTaskButton);
 makeTaskListButton.addEventListener("click", clickMakeTaskButton);
