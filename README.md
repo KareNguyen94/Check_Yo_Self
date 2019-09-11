@@ -28,8 +28,9 @@ stand-ups to figure out where we are at and where we need to be.
 ![Static comp](https://frontend.turing.io/assets/images/projects/check-yo-self/check-yo-self-02.jpg)  
 
 ## Our App  
-<img src="assets/Full_screen.png" alt="Our scren shot project main"/>  
-<img src="assets/task_Screen.png" alt="Our scren shot project functional"/>    
-<img src="assets/phone1.png" alt="Our scren shot mobile top"/>  
-<img src="assets/phone2.png" alt="Our scren shot mobile middle"/>  
-<img src="assets/phone3png" alt="Our scren shot mobile end"/>   
+<img width="1440" alt="Full_Screen" src="https://user-images.githubusercontent.com/52137660/64743013-d35dfa80-d4ed-11e9-8c46-37af364b4b0f.png">
+<img width="1440" alt="task_Screen" src="https://user-images.githubusercontent.com/52137660/64743031-e07ae980-d4ed-11e9-9cfd-78e1e16a1f10.png">
+<img width="553" alt="phone1" src="https://user-images.githubusercontent.com/52137660/64743044-e7a1f780-d4ed-11e9-842c-a8bb1d17b179.png">
+<img width="553" alt="phone2" src="https://user-images.githubusercontent.com/52137660/64743048-ec66ab80-d4ed-11e9-8bdf-be452086c471.png">
+<img width="553" alt="phone3" src="https://user-images.githubusercontent.com/52137660/64743051-eec90580-d4ed-11e9-964d-e14607d756dc.png">
+
