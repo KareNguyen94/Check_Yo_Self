@@ -2,7 +2,7 @@ class ToDoList {
   constructor(title, tasksArr, id, urgent) {
     this.title = title;
     this.tasksArr = tasksArr || [];
-    this.id = id || Date.now();
+    this.id = "task-" + id.toString();
     this.urgent = urgent || false;
   }
   updateToDo() {
@@ -10,7 +10,7 @@ class ToDoList {
   }
   saveToStorage(array) {
     var globalArrToString = JSON.stringify(array);
-    localStorage.setItem("toDoListObj", globalArrToString);
+    localStorage.setItem("toDoListLS", globalArrToString);
   }
   deleteFromStorage() {
 
