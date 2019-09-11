@@ -25,11 +25,11 @@ One of our biggest wins would be how we worked together as a team to overcome th
 stand-ups to figure out where we are at and where we need to be.  
 
 ## Comp  
-[https://frontend.turing.io/assets/images/projects/check-yo-self/check-yo-self-02.jpg]  
+![Static comp](https://frontend.turing.io/assets/images/projects/check-yo-self/check-yo-self-02.jpg)  
 
 ## Our App  
-<img src="assets/Full_screen.png" alt="Our scren shot project main">  
-<img src="assets/task_Screen.png" alt="Our scren shot project functional">    
-<img src="assets/phone1.png" alt="Our scren shot mobile top">  
-<img src="assets/phone2.png" alt="Our scren shot mobile middle">  
-<img src="assets/phone3png" alt="Our scren shot mobile end"> . 
+<img src="assets/Full_screen.png" alt="Our scren shot project main"/>  
+<img src="assets/task_Screen.png" alt="Our scren shot project functional"/>    
+<img src="assets/phone1.png" alt="Our scren shot mobile top"/>  
+<img src="assets/phone2.png" alt="Our scren shot mobile middle"/>  
+<img src="assets/phone3png" alt="Our scren shot mobile end"/>   
