@@ -168,19 +168,18 @@ main {
 }
 
 .main-default-taskcard {
-  height: 520px;
   width: 65%;
   border: 10px solid #D77A61;
   text-align: center;
   margin: 50px auto;
   background-color: #D3E9FF;
   border-radius: 2%;
+  overflow: hidden;
 }
 
 .giphy {
-  margin: 5px auto 15px;
-  height: 400px;
-  width: 600px;
+  margin: auto;
+  width: 90%;
   border-radius: 2%;
 }
 
@@ -284,4 +283,31 @@ footer {
 .completed-task {
   color: #3c6577;
   font-style: italic;
+}
+
+@media screen and (max-width: 750px) {
+  .aside-plus-button {
+    font-size: 5rem;
+  }
+  .main-box {
+      display: flex;
+      flex-direction: column;
+  }
+  aside {
+    width: 100%;
+    height: 900px;
+  }
+  main {
+    width: 100%;
+    height: 1200px;
+  }
+  h1 {
+    width: 200px;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .aside-plus-button {
+    font-size: 250%;
+  }
 }
