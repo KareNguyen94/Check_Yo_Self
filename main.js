@@ -56,7 +56,8 @@ if("toDoListLS" in localStorage) {
   reInstantiation();
   removeDefaultCard();
   createToDoListCard();
-  addUrgentStyleOnReload()
+  addUrgentStyleOnReload();
+  addCompleteStyleOnReload();
   }
 }
 
@@ -72,17 +73,19 @@ function editUrgentProperty(event) {
 }
 
 function addUrgentStyleOnReload() {
+  var urgentImg = document.querySelectorAll(".urgent-img");
   for (var i = 0; i < toDoListInstArr.length; i++) {
     if (toDoListInstArr[i].urgent === true) {
-      var urgentImg = document.getElementById("urgent-img-js");
-      var toDoListForm = document.getElementById("todolist-form");
-      var toDoListDiv = document.getElementById("form-todolist-div");
-      var toDoListSection = document.getElementById("form-todolist-section");
-      urgentImg.src = "assets/urgent-active.svg";
-      urgentImg.alt = "urgent lightning bolt icon";
-      toDoListForm.classList.add("urgent-card");
-      toDoListDiv.classList.add("urgent-text");
-      toDoListSection.classList.add("urgent-border");
+      for (var j = 0; j < urgentImg.length; j++) {
+        var cardId = urgentImg[j].parentNode.parentNode.parentNode.parentNode.dataset.cardid;
+        if (toDoListInstArr[i].id === cardId) {
+          urgentImg[j].src = "assets/urgent-active.svg";
+          urgentImg[j].alt = "urgent lightning bolt icon";
+          urgentImg[j].parentNode.parentNode.parentNode.classList.add("urgent-card");
+          urgentImg[j].parentNode.classList.add("urgent-text");
+          urgentImg[j].parentNode.parentNode.previousElementSibling.classList.add("urgent-border");
+        }
+      }
     }
   }
 }
@@ -109,12 +112,31 @@ function styleUrgentToDoList(event) {
 function completeTask(event) {
   var taskId = event.target.parentNode.dataset.taskid;
   for (var i = 0; i < toDoListInstArr.length; i++) {
-    var taskArray = toDoListInstArr[i].tasksArr;
-    for (var j = 0; j < taskArray.length; j++) {
-      if (taskArray[j].id.toString() === taskId) {
-        taskArray[j].updateTask();
+    var tasksArray = toDoListInstArr[i].tasksArr;
+    for (var j = 0; j < tasksArray.length; j++) {
+      if (tasksArray[j].id.toString() === taskId) {
+        tasksArray[j].updateTask();
         toDoListInstArr[i].saveToStorage(toDoListInstArr);
-        return taskArray[j];
+        return tasksArray[j];
+      }
+    }
+  }
+}
+
+function addCompleteStyleOnReload() {
+  var completeTaskImg = document.querySelectorAll(".form-taskcard-checkimg");
+  for (var i = 0; i < toDoListInstArr.length; i++) {
+    var tasksArray = toDoListInstArr[i].tasksArr;
+    for (var j = 0; j < tasksArray.length; j++) {
+      if (tasksArray[j].complete === true) {
+        for (var k = 0; k < completeTaskImg.length; k++) {
+          var cardId = completeTaskImg[k].parentNode.dataset.taskid;
+          if (tasksArray[j].id === cardId) {
+            completeTaskImg[k].src = "assets/checkbox-active.svg";
+            completeTaskImg[k].alt = "checked off circle";
+            completeTaskImg[k].nextElementSibling.classList.add("completed-task");
+          }
+        }
       }
     }
   }

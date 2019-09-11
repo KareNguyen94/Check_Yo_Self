@@ -3,7 +3,6 @@
   padding: 0;
   box-sizing: border-box;
   font-family: 'Open Sans', sans-serif;
-  /* border: 1px solid blue; */
 }
 
 .main-box {
@@ -289,21 +288,43 @@ footer {
   .aside-plus-button {
     font-size: 5rem;
   }
+
   .main-box {
       display: flex;
       flex-direction: column;
   }
+
+  header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .header-search-box {
+    width: 90%;
+  }
+
   aside {
     width: 100%;
-    height: 900px;
+    height: 650px;
   }
+
   main {
     width: 100%;
     height: 1200px;
   }
-  h1 {
-    width: 200px;
+
+  .main-taskcard-parent-div {
+    width: 95%;
+    margin: 4% 2%;
   }
+
+  .main-taskcard-parent-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
 }
 
 @media screen and (max-width: 900px) {
