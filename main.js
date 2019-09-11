@@ -14,6 +14,7 @@ var rightColumnHeight = 0;
 var lastTaskId = 0;
 var lastCardId = 0;
 
+
 addTaskButton.addEventListener("click", clickAddTaskButton);
 makeTaskListButton.addEventListener("click", clickMakeTaskButton);
 clearAllButton.addEventListener("click", clickClearAllButton);
@@ -55,6 +56,7 @@ if("toDoListLS" in localStorage) {
   reInstantiation();
   removeDefaultCard();
   createToDoListCard();
+  addUrgentStyleOnReload()
   }
 }
 
@@ -66,6 +68,22 @@ function editUrgentProperty(event) {
         toDoListInstArr[i].saveToStorage(toDoListInstArr);
         return toDoListInstArr[i];
       }
+  }
+}
+
+function addUrgentStyleOnReload() {
+  for (var i = 0; i < toDoListInstArr.length; i++) {
+    if (toDoListInstArr[i].urgent === true) {
+      var urgentImg = document.getElementById("urgent-img-js");
+      var toDoListForm = document.getElementById("todolist-form");
+      var toDoListDiv = document.getElementById("form-todolist-div");
+      var toDoListSection = document.getElementById("form-todolist-section");
+      urgentImg.src = "assets/urgent-active.svg";
+      urgentImg.alt = "urgent lightning bolt icon";
+      toDoListForm.classList.add("urgent-card");
+      toDoListDiv.classList.add("urgent-text");
+      toDoListSection.classList.add("urgent-border");
+    }
   }
 }
 
@@ -210,7 +228,7 @@ function reInstantiateTask(array) {
 
   function instantiateCard(title, tasks, urgent) {
   var toDoList = new ToDoList(title, tasks, lastCardId, urgent);
-  toDoListInstArr.unshift(toDoList);
+  toDoListInstArr.push(toDoList);
   toDoList.saveToStorage(toDoListInstArr);
   lastCardId ++;
 }
@@ -220,9 +238,9 @@ function createToDoListCard() {
   for (var i = 0; i < toDoListInstArr.length; i++) {
   var htmlToEnter = `
   <div data-cardid="${toDoListInstArr[i].id}" class="main-taskcard-parent-div item">
-    <form class="main-taskcard">
+    <form class="main-taskcard" id="todolist-form">
       <h2 class="form-taskcard-header">${toDoListInstArr[i].title}</h2>
-      <section class="main-taskcard-section">
+      <section class="main-taskcard-section" id="form-todolist-section">
         ${makeTaskHtml(toDoListInstArr[i].tasksArr)}
       </section>
       <footer>
@@ -230,7 +248,7 @@ function createToDoListCard() {
           <img class="form-taskcard-checkimg urgent-img" id="urgent-img-js" src="assets/urgent.svg" alt="non-urgent lightning bolt icon" />
           <p class="form-taskcard-todo">URGENT<p>
         </div>
-        <div class="form-footer-div">
+        <div class="form-footer-div" id="form-todolist-div">
           <img class="delete-list form-taskcard-checkimg" src="assets/delete.svg" alt="delete X icon" />
           <p class="form-taskcard-todo">DELETE<p>
         </div>
