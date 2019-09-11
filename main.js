@@ -12,6 +12,7 @@ var toDoListInstArr = [];
 var leftColumnHeight = 0;
 var rightColumnHeight = 0;
 var lastTaskId = 0;
+var lastCardId = 0;
 
 addTaskButton.addEventListener("click", clickAddTaskButton);
 makeTaskListButton.addEventListener("click", clickMakeTaskButton);
@@ -21,6 +22,7 @@ taskItemInput.addEventListener("keyup", togglePlusButton);
 taskTitleInput.addEventListener("keyup", disableButtons);
 taskCardParent.addEventListener("click", removeToDoList);
 toDoCardSectionParent.addEventListener("click", clickToDoCard);
+window.addEventListener("load", onPageLoad);
 
 function clickToDoCard() {
   styleUrgentToDoList(event);
@@ -34,29 +36,32 @@ function clickAddTaskButton() {
 }
 
 function clickMakeTaskButton() {
-  removeDefaultCard();
   initialInstantiation();
+  removeDefaultCard();
   createToDoListCard();
   clearField(event);
   disableButtons();
-  removeAllTaskItems();
+  removeChildren(taskItemParent);
 }
 
 function clickClearAllButton() {
   clearField(event);
-  removeAllTaskItems();
+  removeChildren(taskItemParent);
   togglePlusButton();
 }
 
 function onPageLoad() {
+if("toDoListLS" in localStorage) {
   reInstantiation();
+  removeDefaultCard();
   createToDoListCard();
+  }
 }
 
 function editUrgentProperty(event) {
   var toDoListId = event.target.parentNode.parentNode.parentNode.parentNode.dataset.cardid;
   for (var i = 0; i < toDoListInstArr.length; i++) {
-    if (toDoListInstArr[i].id === parseInt(toDoListId)) {
+    if (toDoListInstArr[i].id === toDoListId) {
         toDoListInstArr[i].updateToDo();
         return toDoListInstArr[i];
       }
@@ -81,7 +86,7 @@ function styleUrgentToDoList(event) {
     }
   }
 }
-//second for loop could not use i due to nested in other for loop so used j
+
 function completeTask(event) {
   var taskId = event.target.parentNode.dataset.taskid;
   for (var i = 0; i < toDoListInstArr.length; i++) {
@@ -113,7 +118,7 @@ function styleTask(event) {
 function isolateToDoList(event) {
   var toDoListId = event.target.parentNode.parentNode.parentNode.parentNode.dataset.cardid;
   for (var i = 0; i < toDoListInstArr.length; i++) {
-    if (toDoListInstArr[i].id === parseInt(toDoListId)) {
+    if (toDoListInstArr[i].id === toDoListId) {
         return toDoListInstArr[i];
       }
   }
@@ -131,16 +136,16 @@ function removeToDoList() {
     if (test === true) {
       var toDoListId = event.target.parentNode.parentNode.parentNode.parentNode.dataset.cardid;
       toDoListInstArr = toDoListInstArr.filter(function(toDoList) {
-        return toDoList.id !== parseInt(toDoListId);
+        return toDoList.id !== toDoListId;
     });
     event.target.parentNode.parentNode.parentNode.parentNode.remove();
     }
   }
 }
 
-function removeAllTaskItems() {
-  while (taskItemParent.firstChild) {
-    taskItemParent.removeChild(taskItemParent.firstChild);
+function removeChildren(whichSection) {
+  while (whichSection.firstChild) {
+    whichSection.removeChild(whichSection.firstChild);
   }
 }
 
@@ -150,19 +155,9 @@ function clearField(event) {
 }
 
 function removeDefaultCard() {
-  if(toDoListInstArr.length === 0)
+  if(toDoListInstArr.length > 0)
     defaultTaskCard.remove();
 }
-
-// function getTaskContent() {
-//   var taskDivArr = document.querySelectorAll(".select-me");
-//   // var taskContentArray = [];
-//   // for (var i = 0; i < taskDivArr.length; i++) {
-//   //   var taskcontent = taskDivArr[i].innerText;
-//   //   taskContentArray.push(taskcontent);
-//   // }
-//   // return taskContentArray;
-// }
 
 function initialInstantiation() {
 var taskDivArr = document.querySelectorAll(".select-me");
@@ -170,8 +165,15 @@ var taskInstantiations = instantiateInitialTask(taskDivArr);
 instantiateCard(taskTitleInput.value, taskInstantiations);
 }
 
+function parseFromLS() {
+  var getItem = localStorage.getItem("toDoListLS");
+  var storageArray = JSON.parse(getItem);
+  return storageArray;
+}
+
 function reInstantiation() {
-    //pull from local storage = array of objects = storageArray
+    var storageArray = parseFromLS();
+    console.log(storageArray);
     for (var i = 0; i < storageArray.length; i++) {
     instantiateCard(storageArray[i].title, storageArray[i].tasksArr)
     }
@@ -204,21 +206,14 @@ function reInstantiateTask(array) {
 }
 
   function instantiateCard(title, tasks) {
-  var id = Date.now();
-  var toDoList = new ToDoList(title, tasks, id, false);
+  var toDoList = new ToDoList(title, tasks, lastCardId, false);
   toDoListInstArr.unshift(toDoList);
-}
-
-function deleteExistingCards() {
-  var selectToDoLists = document.getElementsByClassName("main-taskcard-parent-div");
-  for (var i = 0; i < selectToDoLists.length; i++) {
-    var deleteCard = event.target.classList.contains("main-taskcard-parent-div");
-    deleteCard.remove();
-  }
+  toDoList.saveToStorage(toDoListInstArr);
+  lastCardId ++;
 }
 
 function createToDoListCard() {
-  deleteExistingCards();
+  removeChildren(taskCardParent);
   for (var i = 0; i < toDoListInstArr.length; i++) {
   var htmlToEnter = `
   <div data-cardid="${toDoListInstArr[i].id}" class="main-taskcard-parent-div item">
