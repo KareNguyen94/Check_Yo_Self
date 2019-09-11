@@ -63,6 +63,7 @@ function editUrgentProperty(event) {
   for (var i = 0; i < toDoListInstArr.length; i++) {
     if (toDoListInstArr[i].id === toDoListId) {
         toDoListInstArr[i].updateToDo();
+        toDoListInstArr[i].saveToStorage(toDoListInstArr);
         return toDoListInstArr[i];
       }
   }
@@ -94,6 +95,7 @@ function completeTask(event) {
     for (var j = 0; j < taskArray.length; j++) {
       if (taskArray[j].id.toString() === taskId) {
         taskArray[j].updateTask();
+        toDoListInstArr[i].saveToStorage(toDoListInstArr);
         return taskArray[j];
       }
     }
@@ -175,7 +177,7 @@ function reInstantiation() {
     var storageArray = parseFromLS();
     console.log(storageArray);
     for (var i = 0; i < storageArray.length; i++) {
-    instantiateCard(storageArray[i].title, storageArray[i].tasksArr)
+    instantiateCard(storageArray[i].title, storageArray[i].tasksArr, storageArray[i].urgent);
     }
   for (var i = 0; i < toDoListInstArr.length; i++) {
     var tasksArray = toDoListInstArr[i].tasksArr;
@@ -198,15 +200,16 @@ function reInstantiateTask(array) {
   var taskInstArray = [];
   for (var i = 0; i < array.length; i++) {
     var taskcontent = array[i].content;
-    var task = new Task(taskcontent, lastTaskId);
+    var taskComplete = array[i].complete;
+    var task = new Task(taskcontent, lastTaskId, taskComplete);
     lastTaskId ++;
     taskInstArray.push(task);
   }
   return taskInstArray;
 }
 
-  function instantiateCard(title, tasks) {
-  var toDoList = new ToDoList(title, tasks, lastCardId, false);
+  function instantiateCard(title, tasks, urgent) {
+  var toDoList = new ToDoList(title, tasks, lastCardId, urgent);
   toDoListInstArr.unshift(toDoList);
   toDoList.saveToStorage(toDoListInstArr);
   lastCardId ++;

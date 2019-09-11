@@ -1,7 +1,7 @@
 class Task {
-  constructor(content, id) {
+  constructor(content, id, complete) {
     this.content = content;
-    this.complete = false;
+    this.complete = complete || false;
     this.id = "task-" + id.toString();
   }
   updateTask() {
