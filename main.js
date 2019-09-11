@@ -181,6 +181,8 @@ function removeToDoList() {
         return toDoList.id !== toDoListId;
     });
     event.target.parentNode.parentNode.parentNode.parentNode.remove();
+      toDoListInstArr[0].deleteFromStorage("toDoListLS");
+      toDoListInstArr[0].saveToStorage(toDoListInstArr);
     }
   }
 }
