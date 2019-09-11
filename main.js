@@ -14,6 +14,7 @@ var rightColumnHeight = 0;
 var lastTaskId = 0;
 var lastCardId = 0;
 
+
 addTaskButton.addEventListener("click", clickAddTaskButton);
 makeTaskListButton.addEventListener("click", clickMakeTaskButton);
 clearAllButton.addEventListener("click", clickClearAllButton);
@@ -55,6 +56,8 @@ if("toDoListLS" in localStorage) {
   reInstantiation();
   removeDefaultCard();
   createToDoListCard();
+  addUrgentStyleOnReload();
+  addCompleteStyleOnReload();
   }
 }
 
@@ -66,6 +69,24 @@ function editUrgentProperty(event) {
         toDoListInstArr[i].saveToStorage(toDoListInstArr);
         return toDoListInstArr[i];
       }
+  }
+}
+
+function addUrgentStyleOnReload() {
+  var urgentImg = document.querySelectorAll(".urgent-img");
+  for (var i = 0; i < toDoListInstArr.length; i++) {
+    if (toDoListInstArr[i].urgent === true) {
+      for (var j = 0; j < urgentImg.length; j++) {
+        var cardId = urgentImg[j].parentNode.parentNode.parentNode.parentNode.dataset.cardid;
+        if (toDoListInstArr[i].id === cardId) {
+          urgentImg[j].src = "assets/urgent-active.svg";
+          urgentImg[j].alt = "urgent lightning bolt icon";
+          urgentImg[j].parentNode.parentNode.parentNode.classList.add("urgent-card");
+          urgentImg[j].parentNode.classList.add("urgent-text");
+          urgentImg[j].parentNode.parentNode.previousElementSibling.classList.add("urgent-border");
+        }
+      }
+    }
   }
 }
 
@@ -91,12 +112,31 @@ function styleUrgentToDoList(event) {
 function completeTask(event) {
   var taskId = event.target.parentNode.dataset.taskid;
   for (var i = 0; i < toDoListInstArr.length; i++) {
-    var taskArray = toDoListInstArr[i].tasksArr;
-    for (var j = 0; j < taskArray.length; j++) {
-      if (taskArray[j].id.toString() === taskId) {
-        taskArray[j].updateTask();
+    var tasksArray = toDoListInstArr[i].tasksArr;
+    for (var j = 0; j < tasksArray.length; j++) {
+      if (tasksArray[j].id.toString() === taskId) {
+        tasksArray[j].updateTask();
         toDoListInstArr[i].saveToStorage(toDoListInstArr);
-        return taskArray[j];
+        return tasksArray[j];
+      }
+    }
+  }
+}
+
+function addCompleteStyleOnReload() {
+  var completeTaskImg = document.querySelectorAll(".form-taskcard-checkimg");
+  for (var i = 0; i < toDoListInstArr.length; i++) {
+    var tasksArray = toDoListInstArr[i].tasksArr;
+    for (var j = 0; j < tasksArray.length; j++) {
+      if (tasksArray[j].complete === true) {
+        for (var k = 0; k < completeTaskImg.length; k++) {
+          var cardId = completeTaskImg[k].parentNode.dataset.taskid;
+          if (tasksArray[j].id === cardId) {
+            completeTaskImg[k].src = "assets/checkbox-active.svg";
+            completeTaskImg[k].alt = "checked off circle";
+            completeTaskImg[k].nextElementSibling.classList.add("completed-task");
+          }
+        }
       }
     }
   }
@@ -210,7 +250,7 @@ function reInstantiateTask(array) {
 
   function instantiateCard(title, tasks, urgent) {
   var toDoList = new ToDoList(title, tasks, lastCardId, urgent);
-  toDoListInstArr.unshift(toDoList);
+  toDoListInstArr.push(toDoList);
   toDoList.saveToStorage(toDoListInstArr);
   lastCardId ++;
 }
@@ -220,9 +260,9 @@ function createToDoListCard() {
   for (var i = 0; i < toDoListInstArr.length; i++) {
   var htmlToEnter = `
   <div data-cardid="${toDoListInstArr[i].id}" class="main-taskcard-parent-div item">
-    <form class="main-taskcard">
+    <form class="main-taskcard" id="todolist-form">
       <h2 class="form-taskcard-header">${toDoListInstArr[i].title}</h2>
-      <section class="main-taskcard-section">
+      <section class="main-taskcard-section" id="form-todolist-section">
         ${makeTaskHtml(toDoListInstArr[i].tasksArr)}
       </section>
       <footer>
@@ -230,7 +270,7 @@ function createToDoListCard() {
           <img class="form-taskcard-checkimg urgent-img" id="urgent-img-js" src="assets/urgent.svg" alt="non-urgent lightning bolt icon" />
           <p class="form-taskcard-todo">URGENT<p>
         </div>
-        <div class="form-footer-div">
+        <div class="form-footer-div" id="form-todolist-div">
           <img class="delete-list form-taskcard-checkimg" src="assets/delete.svg" alt="delete X icon" />
           <p class="form-taskcard-todo">DELETE<p>
         </div>
