@@ -5,7 +5,7 @@
 Our project is to create a website that allowed a user to make tasks list by adding their own title and tasks while also being
 able to remove them with certain buttons. Within the task list their can check off completed task and if all were completed the 
 x button would allow them to remove the whole task card. They can also mark their task list to be urgent and it would turn a
-differnt color.  
+different color.  
   
 ## Goals
 Solidify and demonstrate your understanding of:
@@ -18,7 +18,7 @@ Solidify and demonstrate your understanding of:
 
 ## Overview of technologies used, challenges, and wins, any other reflections
 Using HTML3 and CSS# to build a a layout from a static comp. Also combining JavaScript to make it functional.  
-Some  of our biggest challenge was dividing work between us three and coming back togther to figure out what we could merge and 
+Some  of our biggest challenge was dividing work between us three and coming back together to figure out what we could merge and 
 how to fix it. Also figuring out how to turn our array of non-instantiated objects from local storage back into an instantiation 
 of a class.  
 One of our biggest wins would be how we worked together as a team to overcome these challenges as a team, having our morning
