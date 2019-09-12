@@ -66,10 +66,11 @@ aside {
   align-items: center;
   background-color: #587A8A;
   border: 2px solid #3C6577;
+  border-right: 3px solid #3C6577;
   display: flex;
   flex-direction: column;
   height: 1250px;
-  width: 33.5%;
+  width: 37.5%;
 }
 
 .aside-task-form {
@@ -158,9 +159,8 @@ aside {
 }
 
 .aside-bottom-section {
-  border-top: 2px solid #3C6577;
+  border-top: 3px solid #3C6577;
   margin-top: 29px;
-  padding-top: 5%;
   padding: 7% 4% 7% 4%;
   width: 100%;
 }
@@ -169,6 +169,7 @@ main {
   background-color: #F3F6F7;
   height: 1250px;
   overflow: auto;
+  padding: 1.8%;
   width: 75%;
 }
 
@@ -224,6 +225,7 @@ padding: 5px;
 
 .form-taskcard-header {
   color: #1F1F3D;
+  font-size: 27px;
   margin: 0px 5px 0px 5px;
   padding: 10px;
 }
@@ -246,22 +248,26 @@ padding: 5px;
 
 .form-taskcard-firsttodo {
   color: #1F1F3D;
+  font-size: 165%;
+  padding-left: 15px;
 }
 
 .form-taskcard-checkimg {
   cursor: pointer;
-  height: 25px;
-  padding-right: 10px;
-  width: 25px;
+  height: 30px;
+  width: 30px;
 }
 
 .form-taskcard-todo {
   font-size: 75%;
+  font-weight: bold;
+  padding-top: 5px;
 }
 
 footer {
   display: flex;
   justify-content: space-between;
+  font-size: 127%;
 }
 
 .form-footer-div {
@@ -288,6 +294,10 @@ footer {
 .completed-task {
   color: #3c6577;
   font-style: italic;
+}
+
+.delete-text-urgent {
+  color: #1F1F3D;
 }
 
 @media screen and (max-width: 750px) {
