@@ -2,6 +2,7 @@ var addTaskButton = document.getElementById("aside-plus-button-js");
 var clearAllButton = document.getElementById("clear-all-button-js");
 var defaultTaskCard = document.getElementById("default-todo-card");
 var formField = document.getElementById("aside-task-form-js");
+var headerSearchInput = document.getElementById("header-search");
 var makeTaskListButton = document.getElementById("make-task-button");
 var taskCardParent = document.getElementById("taskcard-parent");
 var taskItemInput = document.getElementById("aside-task-item-input-js");
@@ -14,6 +15,7 @@ var rightColumnHeight = 0;
 var lastCardId = 0;
 var lastTaskId = 0;
 
+headerSearchInput.addEventListener('keyup', replaceToDoLists);
 addTaskButton.addEventListener("click", clickAddTaskButton);
 makeTaskListButton.addEventListener("click", clickMakeTaskButton);
 clearAllButton.addEventListener("click", clickClearAllButton);
@@ -38,7 +40,7 @@ function clickAddTaskButton() {
 function clickMakeTaskButton() {
   initialInstantiation();
   removeDefaultCard();
-  createToDoListCard();
+  createToDoListCard(toDoListInstArr);
   clearField(event);
   disableButtons();
   removeChildren(taskItemParent);
@@ -54,9 +56,34 @@ function onPageLoad() {
 if("toDoListLS" in localStorage) {
   reInstantiation();
   removeDefaultCard();
-  createToDoListCard();
+  createToDoListCard(toDoListInstArr);
   addUrgentStyleOnReload();
   addCompleteStyleOnReload();
+  }
+}
+
+function searchForTitle() {
+  var temporarySearchArray = [];
+  var newTempArray = temporarySearchArray.concat(toDoListInstArr);
+  var newfilteredArray = newTempArray.filter(function(array) {
+    return array.title === headerSearchInput.value;
+  });
+  createToDoListCard(newfilteredArray);
+  addUrgentStyleOnReload();
+  addCompleteStyleOnReload();
+}
+
+function replaceToDoLists() {
+  for (var i = 0; i < toDoListInstArr.length; i++) {
+    console.log(toDoListInstArr[i].title);
+    if(toDoListInstArr[i].title === headerSearchInput.value) {
+          searchForTitle();
+          return;
+    } else {
+          createToDoListCard(toDoListInstArr);
+          addUrgentStyleOnReload();
+          addCompleteStyleOnReload();
+    }
   }
 }
 
@@ -256,15 +283,15 @@ function reInstantiateTask(array) {
   lastCardId ++;
 }
 
-function createToDoListCard() {
+function createToDoListCard(array) {
   removeChildren(taskCardParent);
-  for (var i = 0; i < toDoListInstArr.length; i++) {
+  for (var i = 0; i < array.length; i++) {
   var htmlToEnter = `
-  <div data-cardid="${toDoListInstArr[i].id}" class="main-taskcard-parent-div item">
+  <div data-cardid="${array[i].id}" class="main-taskcard-parent-div item">
     <form class="main-taskcard" id="todolist-form">
-      <h2 class="form-taskcard-header">${toDoListInstArr[i].title}</h2>
+      <h2 class="form-taskcard-header">${array[i].title}</h2>
       <section class="main-taskcard-section" id="form-todolist-section">
-        ${makeTaskHtml(toDoListInstArr[i].tasksArr)}
+        ${makeTaskHtml(array[i].tasksArr)}
       </section>
       <footer>
         <div class="form-footer-div urgent-div" id="urgent-div-js">
