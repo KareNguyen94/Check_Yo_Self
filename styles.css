@@ -5,8 +5,6 @@
   padding: 0;
 }
 
-/* HEADER */
-
 header {
   align-items: center;
   background-color: #1F1F3D;
@@ -55,8 +53,6 @@ h1 {
 span {
   color: #FFC30C;
 }
-
-/* ASIDE */
 
 .main-box {
   display: flex;
@@ -340,7 +336,6 @@ footer {
     display: flex;
     flex-direction: column;
   }
-
 }
 
 @media screen and (max-width: 900px) {
