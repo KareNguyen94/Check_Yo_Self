@@ -1,8 +1,8 @@
-var addTaskButton = document.getElementById("aside-plus-button-js");
 var clearAllButton = document.getElementById("clear-all-button-js");
 var defaultTaskCard = document.getElementById("default-todo-card");
 var formField = document.getElementById("aside-task-form-js");
 var makeTaskListButton = document.getElementById("make-task-button");
+var plusButton = document.getElementById("aside-plus-button-js");
 var taskCardParent = document.getElementById("taskcard-parent");
 var taskItemInput = document.getElementById("aside-task-item-input-js");
 var taskItemParent = document.getElementById("aside-section-task-items-js");
@@ -14,7 +14,7 @@ var rightColumnHeight = 0;
 var lastCardId = 0;
 var lastTaskId = 0;
 
-addTaskButton.addEventListener("click", clickAddTaskButton);
+plusButton.addEventListener("click", clickPlusButton);
 makeTaskListButton.addEventListener("click", clickMakeTaskButton);
 clearAllButton.addEventListener("click", clickClearAllButton);
 taskItemParent.addEventListener("click", removeTaskItem);
@@ -24,12 +24,7 @@ taskCardParent.addEventListener("click", removeToDoList);
 toDoCardSectionParent.addEventListener("click", clickToDoCard);
 window.addEventListener("load", onPageLoad);
 
-function clickToDoCard() {
-  styleUrgentToDoList(event);
-  styleTask(event);
-}
-
-function clickAddTaskButton() {
+function clickPlusButton() {
   addTaskItem(event);
   togglePlusButton();
   disableButtons();
@@ -50,6 +45,12 @@ function clickClearAllButton() {
   togglePlusButton();
 }
 
+function clickToDoCard() {
+  styleUrgentToDoList(event);
+  styleTask(event);
+}
+
+
 function onPageLoad() {
 if("toDoListLS" in localStorage) {
   reInstantiation();
@@ -60,14 +61,26 @@ if("toDoListLS" in localStorage) {
   }
 }
 
+function styleUrgentToDoList(event) {
+  if (event.target.classList.contains("urgent-img")) {
+    var object = editUrgentProperty(event);
+    if (object.urgent === true) {
+      addUrgentStyle(event, event.target);
+    } else {
+      removeUrgentStyle(event, event.target);
+    }
+  }
+}
+
 function editUrgentProperty(event) {
-  var toDoListId = event.target.parentNode.parentNode.parentNode.parentNode.dataset.cardid;
+  var toDoListId =
+    event.target.parentNode.parentNode.parentNode.parentNode.dataset.cardid;
   for (var i = 0; i < toDoListInstArr.length; i++) {
     if (toDoListInstArr[i].id === toDoListId) {
         toDoListInstArr[i].updateToDo();
         toDoListInstArr[i].saveToStorage(toDoListInstArr);
         return toDoListInstArr[i];
-      }
+    }
   }
 }
 
@@ -76,36 +89,34 @@ function addUrgentStyleOnReload() {
   for (var i = 0; i < toDoListInstArr.length; i++) {
     if (toDoListInstArr[i].urgent === true) {
       for (var j = 0; j < urgentImg.length; j++) {
-        var cardId = urgentImg[j].parentNode.parentNode.parentNode.parentNode.dataset.cardid;
+        var cardId =
+          urgentImg[j].parentNode.parentNode.parentNode.parentNode.dataset.cardid;
         if (toDoListInstArr[i].id === cardId) {
-          urgentImg[j].src = "assets/urgent-active.svg";
-          urgentImg[j].alt = "urgent lightning bolt icon";
-          urgentImg[j].parentNode.parentNode.parentNode.classList.add("urgent-card");
-          urgentImg[j].parentNode.classList.add("urgent-text");
-          urgentImg[j].parentNode.parentNode.previousElementSibling.classList.add("urgent-border");
+          addUrgentStyle(event, urgentImg[j]);
         }
       }
     }
   }
 }
 
-function styleUrgentToDoList(event) {
-  if (event.target.classList.contains("urgent-img")) {
-  var object = editUrgentProperty(event);
-  if (object.urgent === true) {
-      event.target.src = "assets/urgent-active.svg";
-      event.target.alt = "urgent lightning bolt icon";
-      event.target.parentNode.parentNode.parentNode.classList.add("urgent-card");
-      event.target.parentNode.classList.add("urgent-text");
-      event.target.parentNode.parentNode.previousElementSibling.classList.add("urgent-border");
-    } else {
-      event.target.src = "assets/urgent.svg";
-      event.target.alt = "non-urgent lightning bolt icon";
-      event.target.parentNode.parentNode.parentNode.classList.remove("urgent-card");
-      event.target.parentNode.classList.remove("urgent-text");
-      event.target.parentNode.parentNode.previousElementSibling.classList.remove("urgent-border");
-    }
-  }
+
+
+function addUrgentStyle(event, whichElement) {
+  whichElement.src = "assets/urgent-active.svg";
+  whichElement.alt = "urgent lightning bolt icon";
+  whichElement.parentNode.parentNode.parentNode.classList.add("urgent-card");
+  whichElement.parentNode.classList.add("urgent-text");
+  whichElement.parentNode.parentNode.previousElementSibling.classList.add("urgent-border");
+  whichElement.parentNode.nextElementSibling.classList.add("delete-text-urgent");
+}
+
+function removeUrgentStyle(event, whichElement) {
+  whichElement.src = "assets/urgent.svg";
+  whichElement.alt = "non-urgent lightning bolt icon";
+  whichElement.parentNode.parentNode.parentNode.classList.remove("urgent-card");
+  whichElement.parentNode.classList.remove("urgent-text");
+  whichElement.parentNode.parentNode.previousElementSibling.classList.remove("urgent-border");
+  whichElement.parentNode.nextElementSibling.classList.remove("delete-text-urgent");
 }
 
 function completeTask(event) {
@@ -131,9 +142,7 @@ function addCompleteStyleOnReload() {
         for (var k = 0; k < completeTaskImg.length; k++) {
           var cardId = completeTaskImg[k].parentNode.dataset.taskid;
           if (tasksArray[j].id === cardId) {
-            completeTaskImg[k].src = "assets/checkbox-active.svg";
-            completeTaskImg[k].alt = "checked off circle";
-            completeTaskImg[k].nextElementSibling.classList.add("completed-task");
+            addCompleteStyle(event, completeTaskImg[k]);
           }
         }
       }
@@ -145,23 +154,32 @@ function styleTask(event) {
   if (event.target.classList.contains("empty-circle")) {
     var taskObject = completeTask(event);
     if(taskObject.complete === true) {
-      event.target.src = "assets/checkbox-active.svg";
-      event.target.alt = "checked off circle";
-      event.target.nextElementSibling.classList.add("completed-task");
+      addCompleteStyle(event, event.target);
     } else {
-      event.target.src = "assets/checkbox.svg";
-      event.target.alt = "empty checkbox circle";
-      event.target.nextElementSibling.classList.remove("completed-task");
+      removeCompleteStyle(event, event.target);
     }
   }
 }
 
+function addCompleteStyle(event, whichElement) {
+  whichElement.src = "assets/checkbox-active.svg";
+  whichElement.alt = "checked off circle";
+  whichElement.nextElementSibling.classList.add("completed-task");
+}
+
+function removeCompleteStyle(event, whichElement) {
+  whichElement.src = "assets/checkbox.svg";
+  whichElement.alt = "empty checkbox circle";
+  whichElement.nextElementSibling.classList.remove("completed-task");
+}
+
 function isolateToDoList(event) {
-  var toDoListId = event.target.parentNode.parentNode.parentNode.parentNode.dataset.cardid;
+  var toDoListId =
+    event.target.parentNode.parentNode.parentNode.parentNode.dataset.cardid;
   for (var i = 0; i < toDoListInstArr.length; i++) {
     if (toDoListInstArr[i].id === toDoListId) {
-        return toDoListInstArr[i];
-      }
+      return toDoListInstArr[i];
+    }
   }
 }
 
@@ -175,11 +193,12 @@ function removeToDoList() {
     var array = toDoList.tasksArr;
     var test = array.every(isTheyDone);
     if (test === true) {
-      var toDoListId = event.target.parentNode.parentNode.parentNode.parentNode.dataset.cardid;
+      var toDoListId =
+        event.target.parentNode.parentNode.parentNode.parentNode.dataset.cardid;
       toDoListInstArr = toDoListInstArr.filter(function(toDoList) {
         return toDoList.id !== toDoListId;
-    });
-    event.target.parentNode.parentNode.parentNode.parentNode.remove();
+      });
+      event.target.parentNode.parentNode.parentNode.parentNode.remove();
       toDoListInstArr[0].deleteFromStorage("toDoListLS");
       toDoListInstArr[0].saveToStorage(toDoListInstArr);
     }
@@ -203,9 +222,9 @@ function removeDefaultCard() {
 }
 
 function initialInstantiation() {
-var taskDivArr = document.querySelectorAll(".select-me");
-var taskInstantiations = instantiateInitialTask(taskDivArr);
-instantiateCard(taskTitleInput.value, taskInstantiations);
+  var taskDivArr = document.querySelectorAll(".select-me");
+  var taskInstantiations = instantiateInitialTask(taskDivArr);
+  instantiateCard(taskTitleInput.value, taskInstantiations);
 }
 
 function parseFromLS() {
@@ -215,11 +234,10 @@ function parseFromLS() {
 }
 
 function reInstantiation() {
-    var storageArray = parseFromLS();
-    console.log(storageArray);
-    for (var i = 0; i < storageArray.length; i++) {
+  var storageArray = parseFromLS();
+  for (var i = 0; i < storageArray.length; i++) {
     instantiateCard(storageArray[i].title, storageArray[i].tasksArr, storageArray[i].urgent);
-    }
+  }
   for (var i = 0; i < toDoListInstArr.length; i++) {
     var tasksArray = toDoListInstArr[i].tasksArr;
     toDoListInstArr[i].tasksArr = reInstantiateTask(tasksArray);
@@ -249,7 +267,7 @@ function reInstantiateTask(array) {
   return taskInstArray;
 }
 
-  function instantiateCard(title, tasks, urgent) {
+function instantiateCard(title, tasks, urgent) {
   var toDoList = new ToDoList(title, tasks, lastCardId, urgent);
   toDoListInstArr.push(toDoList);
   toDoList.saveToStorage(toDoListInstArr);
@@ -259,53 +277,57 @@ function reInstantiateTask(array) {
 function createToDoListCard() {
   removeChildren(taskCardParent);
   for (var i = 0; i < toDoListInstArr.length; i++) {
-  var htmlToEnter = `
-  <div data-cardid="${toDoListInstArr[i].id}" class="main-taskcard-parent-div item">
-    <form class="main-taskcard" id="todolist-form">
-      <h2 class="form-taskcard-header">${toDoListInstArr[i].title}</h2>
-      <section class="main-taskcard-section" id="form-todolist-section">
-        ${makeTaskHtml(toDoListInstArr[i].tasksArr)}
-      </section>
-      <footer>
-        <div class="form-footer-div urgent-div" id="urgent-div-js">
-          <img class="form-taskcard-checkimg urgent-img" id="urgent-img-js" src="assets/urgent.svg" alt="non-urgent lightning bolt icon" />
-          <p class="form-taskcard-todo">URGENT<p>
-        </div>
-        <div class="form-footer-div" id="form-todolist-div">
-          <img class="delete-list form-taskcard-checkimg" src="assets/delete.svg" alt="delete X icon" />
-          <p class="form-taskcard-todo">DELETE<p>
-        </div>
-      </footer>
-    </form>
-  </div>`;
-  taskCardParent.insertAdjacentHTML('afterbegin', htmlToEnter);
-  runMasonryLayout();
+    var htmlToEnter = `
+      <div data-cardid="${toDoListInstArr[i].id}"
+        class="main-taskcard-parent-div item">
+        <form class="main-taskcard" id="todolist-form">
+          <h2 class="form-taskcard-header">${toDoListInstArr[i].title}</h2>
+          <section class="main-taskcard-section" id="form-todolist-section">
+            ${makeTaskHtml(toDoListInstArr[i].tasksArr)}
+          </section>
+          <footer>
+            <div class="form-footer-div urgent-div" id="urgent-div-js">
+              <img class="form-taskcard-checkimg urgent-img" id="urgent-img-js"
+                src="assets/urgent.svg" alt="non-urgent lightning bolt icon" />
+              <p class="form-taskcard-todo">URGENT<p>
+            </div>
+            <div class="form-footer-div" id="form-todolist-div">
+              <img class="delete-list form-taskcard-checkimg"
+                src="assets/delete.svg" alt="delete X icon" />
+              <p class="form-taskcard-todo delete">DELETE<p>
+            </div>
+          </footer>
+        </form>
+      </div>`;
+    taskCardParent.insertAdjacentHTML('afterbegin', htmlToEnter);
+    runMasonryLayout();
   }
 }
 
 function runMasonryLayout() {
   var toDoListCard = document.getElementsByClassName('item');
   var toDoListMasonry = document.querySelector(".main-taskcard-parent-div");
-      for (var i = 0; i < toDoListCard.length; i++) {
-          if (leftColumnHeight > rightColumnHeight) {
-              rightColumnHeight += (i + 1);
-              toDoListMasonry.classList.add('right');
-              return;
-          } else {
-              leftColumnHeight += (i + 1);
-              return;
-          }
-        }
+  for (var i = 0; i < toDoListCard.length; i++) {
+    if (leftColumnHeight > rightColumnHeight) {
+      rightColumnHeight += (i + 1);
+      toDoListMasonry.classList.add('right');
+      return;
+    } else {
+      leftColumnHeight += (i + 1);
+      return;
+    }
+  }
 }
 
 function makeTaskHtml(array) {
   var taskHtml = "";
   for (var i = 0; i < array.length; i++) {
     taskHtml += `
-    <div data-taskid="${array[i].id}" class="form-taskcard-div">
-      <img class="form-taskcard-checkimg empty-circle" src="assets/checkbox.svg" alt="empty checkbox circle" />
-      <p class="form-taskcard-firsttodo">${array[i].content}<p>
-    </div>`;
+      <div data-taskid="${array[i].id}" class="form-taskcard-div">
+        <img class="form-taskcard-checkimg empty-circle" src="assets/checkbox.svg"
+          alt="empty checkbox circle" />
+        <p class="form-taskcard-firsttodo">${array[i].content}<p>
+      </div>`;
   }
   return taskHtml;
 }
@@ -313,10 +335,11 @@ function makeTaskHtml(array) {
 function addTaskItem(event) {
   event.preventDefault();
   taskItemParent.innerHTML +=  `
-      <div class="select-me aside-added-task-box">
-        <img src="assets/delete.svg" alt="delete X icon" class="aside-added-task-icon-x" />
-        <p id="task-text">${taskItemInput.value}</p>
-      </div>`;
+    <div class="select-me aside-added-task-box">
+      <img src="assets/delete.svg" alt="delete X icon"
+        class="aside-added-task-icon-x" />
+      <p id="task-text">${taskItemInput.value}</p>
+    </div>`;
   taskItemInput.value = "";
   disableButtons();
 }
@@ -330,11 +353,11 @@ function removeTaskItem(event) {
 
 function togglePlusButton() {
   if (taskItemInput.value !== "") {
-    addTaskButton.classList.remove("disabled-button");
-    addTaskButton.disabled = false;
+    plusButton.classList.remove("disabled-button");
+    plusButton.disabled = false;
   } else {
-    addTaskButton.classList.add("disabled-button");
-    addTaskButton.disabled = true;
+    plusButton.classList.add("disabled-button");
+    plusButton.disabled = true;
   }
 }
 
