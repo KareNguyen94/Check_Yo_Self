@@ -1,5 +1,5 @@
 # Check_Yo_Self
-### By John A, Heather H, Karen N.  
+### By John A, Heather F, Karen N.  
   
 ## Overview of project
 Our project is to create a website that allowed a user to make tasks list by adding their own title and tasks while also being
